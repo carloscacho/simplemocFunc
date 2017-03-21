@@ -1,0 +1,48 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Simple MOOC - Uma simples plataforma de ensino a distância" />
+    <title>Simple MOOC</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css"/>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <script src="http://yui.yahooapis.com/3.12.0/build/yui/yui-min.js"></script>
+    <script src="https://github.com/yui/yui3-gallery/blob/master/src/gallery-simple-menu/js/simple-menu.js" ></script>
+</head>
+<body>
+<div class="header">
+    <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
+        <a class="pure-menu-heading pure-menu-link" href="{% url 'home' %}">SIMPLE MOOC</a>
+        <ul class="pure-menu-list">
+            
+            <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'home' %}">Início</a></li>
+            <li class="pure-menu-item"><a  class="pure-menu-link" href="{% url 'courses' %}">Cursos</a></li>
+            <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'contact' %}">Contato</a></li>
+            {% if user.is_authenticated %}
+            <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+                <a id="menuLink1" class="pure-menu-link" href="#">Ola </a>
+            
+                <ul class="pure-menu-children">
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'dashboard' %}">Painel</a></li> 
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'logout' %}">Sair</a></li>
+                </ul>
+
+            </li>
+            {% else %}
+            <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'login' %}">Entrar</a></li>
+            {% endif %}
+              
+           </ul>
+    </div>
+</div>
+<div class="content">
+    {% block content %}{% endblock %}
+    <div class="footer">
+        Simple MOOC - Uma simples plataforma de ensino a distância
+    </div>
+</div>
+
+</body>
+</html>
