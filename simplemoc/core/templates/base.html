@@ -2,7 +2,7 @@
 {% load static %}
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Simple MOOC - Uma simples plataforma de ensino a distância" />
     <title>Simple MOOC</title>
@@ -12,7 +12,7 @@
     <script src="https://github.com/yui/yui3-gallery/blob/master/src/gallery-simple-menu/js/simple-menu.js" ></script>
 </head>
 <body>
-<div class="header">
+<div class="header">    
     <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
         <a class="pure-menu-heading pure-menu-link" href="{% url 'home' %}">SIMPLE MOOC</a>
         <ul class="pure-menu-list">
@@ -22,7 +22,7 @@
             <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'contact' %}">Contato</a></li>
             {% if user.is_authenticated %}
             <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-                <a id="menuLink1" class="pure-menu-link" href="#">Ola </a>
+                <a id="menuLink1" class="pure-menu-link" href="#">Ola {{ user }}</a>
             
                 <ul class="pure-menu-children">
                     <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'dashboard' %}">Painel</a></li> 
