@@ -10,6 +10,15 @@ from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin, User
 from django.conf import settings
 
 
+'''
+Modelo para criação da tabela no Banco dos Usuários
+Essa é uma mudança nos User Padrão do Django.
+Para que não ocorra erros alguns coisas devem ser 
+similar ao User padrão do Djando
+
+AbstractBaseUser: Usuário padrão do Django que será extendo por esse novo padrão
+PermissionsMixin: classe que realiza a premisão de acesso do usuário
+'''
 
 class MyUser(AbstractBaseUser, PermissionsMixin):
 	##User validators.RegexValidator()
@@ -24,7 +33,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 	is_trusty = models.BooleanField(_('trusty'), default=False,
 		help_text=_('Designates whether this user has confirmed his account.'))
 	
-	object = UserManager()
+	objects = UserManager()
 
 	
 	USERNAME_FIELD = 'username'
@@ -44,6 +53,12 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 		verbose_name='Usuário'
 		verbose_name_plural = 'Usuários'
 
+
+
+'''
+Modelo para requisição de pedidos de nova senha
+Acionado caso o usuário esqueça a senha
+'''
 class PasswordReset(models.Model):
 
 	user = models.ForeignKey(settings.AUTH_USER_MODEL,

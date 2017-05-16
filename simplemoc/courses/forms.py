@@ -2,15 +2,14 @@ from django import forms
 from django.core.mail import send_mail
 from django.conf import settings
 
+from .models import Comment
+
 class ContactCourse(forms.Form):
 	name = forms.CharField(label='Nome',
 		max_length=100
 		)
-	enventDate = forms.DateTimeField(
-		label='Data_do_Evento',
-		required=False)
 	
-	email = forms.EmailField(label='e-mail', 
+	email = forms.EmailField(label='E-mail', 
 		required=False)
 
 	message = forms.CharField(
@@ -35,4 +34,8 @@ class ContactCourse(forms.Form):
 			[settings.CONTACT_EMAIL]
 		)
 
+class commentForm(forms.ModelForm):
 
+	class Meta:
+		model = Comment
+		fields = ['comment']

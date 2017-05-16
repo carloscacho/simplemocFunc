@@ -127,14 +127,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'simplemoc', 'media')
 MEDIA_URL = '/media/'
 
 #e-mails
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'CARLOS carlos.emlio@gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'carlos.emlio@gmail.com'
-EMAIL_HOST_PASSWORD = 'computa73ns0'
-EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'carlos.emlio@gmail.com'
+# EMAIL_HOST_PASSWORD = 'computa73ns0'
+# EMAIL_PORT = 587
 
 CONTACT_EMAIL = 'carlos.emlio@gmail.com'
 

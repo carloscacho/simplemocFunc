@@ -1,0 +1,103 @@
+{% extends "courses/course_dashboard.html" %}
+{% load static %}
+{% block dashboard_content %}
+<div class="well">
+	<div class="splash">
+        <div class="pure-g-r">
+            <div class="pure-u-1">
+                <div class="l-box splash-text">
+                    <h1 class="splash-head">
+                        {{ course }}
+                    </h1>
+                    <h2 class="splash-subhead">
+                        {{ course.description }}
+                    </h2>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="pure-g-r content-ribbon">
+            <div class="pure-u-16-24">
+                <div class="l-box">
+                    <h4 class="content-subhead">Sobre o Curos</h4>
+					
+					{{ course.about | linebreaks }}
+
+                </div>
+            </div>
+            <div class="pure-u-7-24">
+                <div class="l-box">
+					{% if course.image %}
+
+                    <img class="pure-img" src="{{ course.image.url }}"
+                         alt="{{ course }}" />
+
+                	{% else %}
+
+					<img class="pure-img" src= "{% static 'img/course.img.png' %}"
+                         alt="{{course}}" />
+
+                	{% endif%}
+                </div>
+            </div>
+        </div>
+
+
+		<h4> Aulas Disponibilizadas </h4>
+		<table class="pure-table">
+			<thead>
+				<tr>
+					<th>
+						Tema
+					</th>
+					<th>
+						Descrição da Aula
+					</th>
+					<th>
+						Liberado em 
+					</th>
+					<th>
+						Acessar
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for lesson in lessons %}
+					<tr>
+						<td>
+							{{lesson}}
+						</td>
+						<td>
+							{{lesson.description|truncatewords:20}}
+						</td>
+						<td>
+						{% if not lesson.is_available %}
+							{{lesson.relase_date|date:'d/m/Y'}} 
+						{% else %}
+							{{lesson.relase_date|date:'d/m/Y'}} liberado a {{lesson.relase_date|timesince}}
+						{%endif%}
+						</td>
+						<td>
+							{% if not lesson.is_available %}
+								<i class="fa fa-linkb">
+								</i>
+								Não liberado
+							{% else %}
+							<a href="{% url 'lesson' course.slug lesson.pk %}">
+								<i class="fa fa-link">
+								</i>
+								Acessar
+							</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+
+
+{% endblock dashboard_content%}

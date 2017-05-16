@@ -1,0 +1,44 @@
+{% extends "accounts/dashboard.html" %}
+
+{% block breadcrumb %}
+	{{block.super}}
+	<li>/</li>
+	<li><a href="{% url 'coursepage' course.slug%}"> {{course}}</a></li>
+	
+{% endblock breadcrumb %}
+
+{% block extra_menu %}
+	<li class="pure-menu-heading">
+		
+			{{course}}
+		
+	</li>
+	<li class="pure-menu-item">
+		<a class="pure-menu-link" href="{% url 'lessons' course.slug %}">
+		<i class="fa fa-video-camera"></i>
+		Aulas e materia
+		</a>
+	</li>
+
+	<li class="pure-menu-item">
+		<a class="pure-menu-link" href="{% url 'courseinfo' course.slug %}">
+		<i class="fa fa-info-circle"></i>
+		Informações
+		</a>
+	</li>
+
+	<li class="pure-menu-item">
+		<a class="pure-menu-link" href="{% url 'coursepage' course.slug %}">
+		<i class="fa fa-envelope"></i>
+		Anúncios
+		</a>
+	</li>
+
+	<li class="pure-menu-item">
+		<a class="pure-menu-link" href="#">
+		<i class="fa fa-comments"></i>
+		Fórum de Dúvidas
+		</a>
+	</li>
+{{ block.super }}
+{% endblock extra_menu %}

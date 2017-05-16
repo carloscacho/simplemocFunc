@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load course_tags %}
+
 {% block content %}
 <div class="pure-g-r content-ribbon">
 	<div class="pure-u-1">
@@ -10,29 +12,62 @@
 		</ul>
 	</div>
 
-	<div class="pure-u-1-5">
+	<div class="pure-u-6-24">
 		<div class="pure-menu custom-restricted-width" style="border: 1px solid gray;">
-			<a class="pure-menu-heading" style="border-bottom: 1px solid gray;"> Meus Cursos</a>
+			
 			<ul class="pure-menu-list">
-				<li class="pure-menu-item"><a class="pure-menu-link" href="#">Curso 1</a></li>
-				<li class="pure-menu-item"><a class="pure-menu-link" href="#">Curso 2</a></li>
-				<li class="pure-menu-heading" style="border-bottom: 1px solid gray;"> Meus Cursos</li>
-				<li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'edit' %}">Editar Conta</a></li>
-				<li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'edit_password' %}">Editar Senha</a></li>
+				<li class="pure-menu-heading" style="border-bottom: 1px solid gray;">
+				<i class="fa fa-user"></i>
+					Bem vindo, {{user}}
+				</li>
+				{% block extra_menu %}
+					
+				
+				{% my_courses user %}
+
+				<li class="pure-menu-heading" style="border-bottom: 1px solid gray;">Conta</li>
+				<li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'edit' %}">
+				<i class="fa fa-cog"></i>
+				Editar Conta</a></li>
+				<li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'edit_password' %}">
+				<i class="fa fa-lock"></i>
+				Editar Senha</a></li>
+
+				{% endblock extra_menu %}
 			</ul>
 		</div>
 	</div>
 
-	<div class="pure-u-1-5" ></div>
+	<div class="pure-u-1-24" ></div>
 	
-	<div class="pure-u-2-5">
+	<div class="pure-u-15-24">
 		<div class="inner">
 			{% block dashboard_content %}
+			<h2> Meus Cursos</h2>
+
+			{% for enroll in enrollments %}
 				
+			<div class="well">
+				<h3>{{enroll.course}} ({{enroll.course.start_date | date:'d/m/Y'|default:'Sem Data' }})</h3>
+				
+				{{enroll.course.description | linebreaks}}
+
+				<div class="pure-controls">
+					<a href="{% url 'coursepage' enroll.course.slug %}" class="pure-button button-primary"> Acessar</a>
+					<a href="{% url 'undo_enrollment' enroll.course.slug %}" class="pure-button button-error">
+						Cancelar
+					</a>
+				</div>
+			</div>	
 			
-			<p><strong>Usuario:</strong> {{user}}</p>
-			<p><strong>E-mail:</strong> {{user.email}}</p>
-			<p><strong>Data de Nacimento:</strong> {{user.dayNasc}}</p>
+			{% empty %}
+			<aside class="pure-u-1">
+				<p class="msgformat">
+					Você não está inscrito em nenhum curso 
+				</p>
+			</aside>
+
+			{% endfor %}
 
 			{% endblock dashboard_content %}
 		</div>

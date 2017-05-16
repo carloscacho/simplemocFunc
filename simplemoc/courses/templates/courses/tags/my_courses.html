@@ -1,0 +1,11 @@
+<li class="pure-menu-heading" style="border-bottom: 1px solid gray;"> Meus Cursos</a>
+{% for enroll in enrollments  %}
+	<li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'coursepage' enroll.course.slug %}">
+	<i class="fa fa-book"></i>
+	{{enroll.course}}
+	</a></li>
+	{% empty %}
+	<li class="pure-menu-item">
+	<a class="pure-menu-link" href="#">Nenhum curso disponível</a>
+	</li>
+{% endfor %}
