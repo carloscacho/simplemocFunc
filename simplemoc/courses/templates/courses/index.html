@@ -1,10 +1,6 @@
-{% extends "base.html" %}
-
-{% load static %}
-
-{% block content %}
-<div class="pure-g-r content-ribbon">
-    <div class="pure-u-1">
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="row">
+    <div class="col-10">
         <div class="l-box">
             <h4 class="content-subhead">Listagem de Cursos do SimpleMOOC</h4>
             <p>Abaixo a lista de cursos disponíveis na plataforma</p>
@@ -12,38 +8,38 @@
     </div>
 </div>
 {% for course in courses %}
-<div class="pure-g-r content-ribbon"> 
-    <div class="pure-u-1-5">
-        <div class="l-box">
-            <a href="{{ course.get_absolute_url }}">
-            {%if course.image %}
-                <img class="pure-img" src="{{ course.image.url}}" alt="{{ course.name }}">
-            {% else %}
-                <img class="pure-img" src="{% static 'img/course-img.png' %}" alt="{{ course.name }}">
-            {% endif %}
-            </a>
-        </div>
-    </div>
-    <div class="pure-u-3-5">
-        <div class="l-box">
-            <h4 class="content-subhead">
+<div class="row justify-content-center">
+    <div class="col-10">
+        <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                <a href="{{ course.get_absolute_url }}">
+                    {%if course.image %}
+                    <img class="card-img-left" src="{{ course.image.url}}" alt="{{ course.name }}"> 
+                    {% else %}
+                    <img class="card-img-left" src="{% static 'img/course-img.png' %}" alt="{{ course.name }}"> {% endif %}
+                </a>
+        
+    <!-- </div>
+    <div class="col-3-5"> -->
+        <div class="card-body">
+            <h4 class="card-header">
                 <a href="{{ course.get_absolute_url }}" title="">{{ course.name }}</a>
             </h4>
-            
+            <p class="card-text">
                 {{course.description | linebreaks }}
+            </p>
             
+
         </div>
-        
+        </div>
     </div>
 </div>
 {% empty %}
-<div class="pure-g-r content-ribbon">
-    <div class="pure-u-1">
+<div class="row">
+    <div class="col-10">
         <div class="l-box">
-            
+
             <p>nenhum curso disponíveis na plataforma</p>
         </div>
     </div>
 </div>
-{% endfor %}
-{% endblock %}
+{% endfor %} {% endblock %}

@@ -10,9 +10,6 @@ body {
 a {
     color: #3b8bba;
 }
-.content {
-    padding-top: 2em;
-}
 .l-box {
     padding: 1em;
 }
@@ -91,7 +88,7 @@ body .primary-button {
 .splash .primary-button {
     font-size: 150%;
 }
-.content .content-subhead {
+/* .content .content-subhead {
     color: #999;
     padding-bottom: 0.3em;
     text-transform: uppercase;
@@ -101,7 +98,7 @@ body .primary-button {
 }
 .content .content-ribbon {
     margin: 1.5em 3em;
-}
+} */
 .ribbon {
     background: #eee;
     text-align: center;

@@ -18,7 +18,8 @@
 <body>
     <!-- <div class="header">     -->
     <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
-        <a class="navbar-brand mr-0 mr-md-2" href="{% url 'home' %}">SIMPLE MOOC</a>
+        <a class="navbar-brand mr-0 mr-md-2" href="{% url 'home' %}">
+            <i class="fa fa-graduation-cap"></i> SIMPLE MOOC</a>
         <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
 
             <li class="nav-item down-item">
@@ -45,8 +46,8 @@
 
             </li>
             {% else %}
-            <li class="pure-menu-item">
-                <a class="pure-menu-link" href="{% url 'login' %}">Entrar</a>
+            <li class="nav-item down-item">
+                <a class="nav-link active" href="{% url 'login' %}">Entrar</a>
             </li>
             {% endif %}
 
@@ -55,17 +56,19 @@
     <!-- </div> -->
     <div class="content">
         <!-- Menssagens -->
-        <div class="pure-g-r content-ribbon">
-            {% if messages %}
-            <aside class="pure-u-1">
+
+        {% if messages %}
+        <div class="row">
+            <aside class="col-5">
                 {% for msg in messages %}
                 <p class="msgformat">{{msg}}</p>
                 {% endfor %}
             </aside>
-            {% endif %}
         </div>
-
+        {% endif %}
+        
         {% block content %}{% endblock %}
+
         <div class="bd-footer text-muted">
             <div class="container-fluid p-3 p-md-5">
                 <p>
@@ -73,9 +76,10 @@
                 </p>
                 <p>
                     Copyright &copy; 2017
-                <a href="https://github.com/carloscacho/simplemocFunc" target="_blank"><i class="fa fa-github"></i>/carloscacho</a>
+                    <a href="https://github.com/carloscacho/simplemocFunc" target="_blank">
+                        <i class="fa fa-github"></i>/carloscacho</a>
                 </p>
-                
+
             </div>
 
         </div>

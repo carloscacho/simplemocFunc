@@ -1,85 +1,74 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="jumbotron jumbotron-fluid">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-3">
 
-{% load static %}
+				{% if course.image %}
 
-{% block content %}
-<div class="splash">
-        <div class="pure-g-r">
-            <div class="pure-u-1">
-                <div class="l-box splash-text">
-                    <h1 class="splash-head">
-                        {{ course }}
-                    </h1>
-                    <h2 class="splash-subhead">
-                        {{ course.description }}
-                    </h2>
-                    <p>
-                        <a href="{% url 'enrollment' course.slug %}" class="pure-button primary-button">inscreva-se</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="content">
-        <div class="pure-g-r content-ribbon">
-            <div class="pure-u-16-24">
-                <div class="l-box">
-                    <h4 class="content-subhead">Sobre o Curos</h4>
-					
-					{{ course.about | linebreaks }}
+				<img class="rounded float-left" src="{{ course.image.url }}" alt="{{ course }}" /> {% else %}
 
-                </div>
-            </div>
-            <div class="pure-u-7-24">
-                <div class="l-box">
-					{% if course.image %}
+				<img class="rounded float-left" src="{% static 'img/course.img.png' %}" alt="{{course}}" /> {% endif%}
 
-                    <img class="pure-img" src="{{ course.image.url }}"
-                         alt="{{ course }}" />
-
-                	{% else %}
-
-					<img class="pure-img" src= "{% static 'img/course.img.png' %}"
-                         alt="{{course}}" />
-
-                	{% endif%}
-                </div>
-            </div>
-        </div>
-<div class="pure-g-r content-ribbon" id="contato">
-	<div class="pure-u-1">
-		<h3>Tire sua dúvida sobre o curso</h3>
-		{% if isValid %}
-			<h4> Menssagem enviada com sucesso</h4>
-		{% endif %}
-		<form action="#contato" class="pure-form pure-form-aligned" method="POST">
-			{% csrf_token %}
-			<fieldset>
-				
-				{% for field in form  %}
-				<div class="pure-control-group">
-					{{ field.label_tag }}
-					{{ field }}
-				
-				{% if field.errors %}
-					<ul class="errorlist">
-						{% for error in field.errors  %}
-							<li> {{error}} </li>
-						{% endfor %}
-						
-						
-					</ul>
-					
-				{% endif %}
+			</div>
+			<div class="col-8">
+				<div class="ml-5">
+					<h1>
+						{{ course }}
+					</h1>
+					<p class="text-muted">
+						{{ course.description }}
+					</p>
+					<p>
+						<a href="{% url 'enrollment' course.slug %}" class="btn btn-outline-primary">inscreva-se</a>
+					</p>
 				</div>
-				{% endfor %}
-				
-				<div class="pure-controls">
-					<input type="submit" class="pure-button pure-button-primary" value="Enviar" />
-
-				</div>
-			</fieldset>
-		</form>
+			</div>
+		</div>
 	</div>
 </div>
-{% endblock content %}
+<div class="content">
+	<div class="row justify-content-center">
+		<div class="col-10">
+			<div class="l-box">
+				<h4 class="content-subhead">Sobre o Curos</h4>
+
+				{{ course.about | linebreaks }}
+
+			</div>
+		</div>
+	</div>
+	<div class="row" id="contato">
+		<div class="col-10">
+			<h3>Tire sua dúvida sobre o curso</h3>
+			{% if isValid %}
+			<h4> Menssagem enviada com sucesso</h4>
+			{% endif %}
+			<form action="#contato" class="pure-form pure-form-aligned" method="POST">
+				{% csrf_token %}
+				<fieldset>
+
+					{% for field in form %}
+					<div class="pure-control-group">
+						{{ field.label_tag }} {{ field }} {% if field.errors %}
+						<ul class="errorlist">
+							{% for error in field.errors %}
+							<li> {{error}} </li>
+							{% endfor %}
+
+
+						</ul>
+
+						{% endif %}
+					</div>
+					{% endfor %}
+
+					<div class="pure-controls">
+						<input type="submit" class="pure-button pure-button-primary" value="Enviar" />
+
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+	{% endblock content %}
