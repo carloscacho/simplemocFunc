@@ -72,7 +72,7 @@ class Lesson(models.Model):
 	relase_date = models.DateField('data de liberação', blank=True, null=True)
 
 	course = models.ForeignKey(Course, 
-		verbose_name='Curso', related_name='lessons')
+		verbose_name='Curso', related_name='lessons', on_delete=models.CASCADE)
 
 	created_at  = models.DateTimeField('Criado em', auto_now_add=True)
 	updated_at = models.DateTimeField('Atualizado em', auto_now=True)
@@ -101,7 +101,8 @@ class Material(models.Model):
 	is_embendded  = models.BooleanField('é um video?', default=False)
 	file = models.FileField(upload_to='lessons/materials', blank=True, null=True)
 	
-	lesson = models.ForeignKey(Lesson, verbose_name='Aula', related_name='materials')
+	lesson = models.ForeignKey(Lesson, verbose_name='Aula', 
+		related_name='materials', on_delete=models.CASCADE)
 
 	created_at  = models.DateTimeField('Criado em', auto_now_add=True)
 	updated_at = models.DateTimeField('Atualizado em', auto_now=True)
@@ -123,13 +124,15 @@ class Enrollment(models.Model):
 
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, 
     	verbose_name='Usuário',
-    	related_name='enrollments'
+    	related_name='enrollments',
+		on_delete=models.CASCADE
     	)
 
 	course = models.ForeignKey(
     	Course, 
     	verbose_name='Curso',
-    	related_name='enrollments'
+    	related_name='enrollments',
+		on_delete=models.CASCADE
     	)
 
 	status = models.IntegerField('Situação',
@@ -161,7 +164,8 @@ class Announcement(models.Model):
     """
     Description: Model Description
     """
-    course = models.ForeignKey(Course, verbose_name='Curso', related_name='announcements')
+    course = models.ForeignKey(Course,
+		verbose_name='Curso', related_name='announcements', on_delete=models.CASCADE)
     title = models.CharField('Titulo', max_length=100)
     content = models.TextField('Conteúdo')
 
@@ -182,8 +186,8 @@ class Comment(models.Model):
     Description: Model Description
     """
     announcement = models.ForeignKey(Announcement, verbose_name='Aula',
-    	related_name='comments')
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='usuário')
+    	related_name='comments', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='usuário', on_delete=models.CASCADE)
 
     comment = models.TextField('Comentário')
 

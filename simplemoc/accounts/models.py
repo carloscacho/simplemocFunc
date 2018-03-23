@@ -63,7 +63,8 @@ class PasswordReset(models.Model):
 
 	user = models.ForeignKey(settings.AUTH_USER_MODEL,
 		verbose_name='Usuário', 
-		related_name='resets')
+		related_name='resets', 
+		on_delete=models.CASCADE)
 
 	key = models.CharField('Chave reset', max_length=50, unique=True)
 	created_at = models.DateTimeField('Criado em', auto_now_add=True)
