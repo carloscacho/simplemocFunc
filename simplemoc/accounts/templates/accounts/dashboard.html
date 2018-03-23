@@ -5,11 +5,11 @@
 {% block content %}
 <div class="pure-g-r content-ribbon">
 	<div class="pure-u-1">
-		<ul class="breadcrumb">
+		<ol class="breadcrumb">
 			{% block breadcrumb %}
-				<li><a href="{% url 'dashboard' %}"> Meu Painel</a></li>
+				<li class="breadcrumb-item active" aria-current="page" ><a href="{% url 'dashboard' %}"> Meu Painel</a></li>
 			{% endblock breadcrumb %}
-		</ul>
+		</ol>
 	</div>
 
 	<div class="pure-u-6-24">

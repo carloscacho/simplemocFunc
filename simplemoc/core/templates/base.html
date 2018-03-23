@@ -1,60 +1,97 @@
-<!doctype html>
-{% load static %}
+<!doctype html> {% load static %}
 <html lang="en">
+
 <head>
-   <meta charset="utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Simple MOOC - Uma simples plataforma de ensino a distância" />
     <title>Simple MOOC</title>
-<link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+        integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
     <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}" />
     <script src="http://yui.yahooapis.com/3.12.0/build/yui/yui-min.js"></script>
-    <script src="https://github.com/yui/yui3-gallery/blob/master/src/gallery-simple-menu/js/simple-menu.js" ></script>
+    <script src="https://github.com/yui/yui3-gallery/blob/master/src/gallery-simple-menu/js/simple-menu.js"></script>
 </head>
+
 <body>
-<div class="header">    
-    <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading pure-menu-link" href="{% url 'home' %}">SIMPLE MOOC</a>
-        <ul class="pure-menu-list">
-            
-            <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'home' %}">Início</a></li>
-            <li class="pure-menu-item"><a  class="pure-menu-link" href="{% url 'courses' %}">Cursos</a></li>
-            <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'contact' %}">Contato</a></li>
+    <!-- <div class="header">     -->
+    <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+        <a class="navbar-brand mr-0 mr-md-2" href="{% url 'home' %}">SIMPLE MOOC</a>
+        <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+
+            <li class="nav-item down-item">
+                <a class="nav-link active" href="{% url 'home' %}">Início</a>
+            </li>
+            <li class="nav-item down-item">
+                <a class="nav-link active" href="{% url 'courses' %}">Cursos</a>
+            </li>
+            <li class="nav-item down-item">
+                <a class="nav-link active" href="{% url 'contact' %}">Contato</a>
+            </li>
             {% if user.is_authenticated %}
-            <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-                <a id="menuLink1" class="pure-menu-link" href="#">Ola {{ user }}</a>
-            
-                <ul class="pure-menu-children">
-                    <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'dashboard' %}">Painel</a></li> 
-                    <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'logout' %}">Sair</a></li>
-                </ul>
+            <li class="nav-item">
+                <div class="btn-group">
+                    <button class="btn dropdown-toggle" type="button" id="buttonMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Ola {{ user }}
+                    </button>
+
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'dashboard' %}">Painel</a>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Sair</a>
+                    </div>
+                </div>
 
             </li>
             {% else %}
-            <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'login' %}">Entrar</a></li>
+            <li class="pure-menu-item">
+                <a class="pure-menu-link" href="{% url 'login' %}">Entrar</a>
+            </li>
             {% endif %}
-              
-           </ul>
-    </div>
-</div>
-<div class="content">
-    <!-- Menssagens -->
-    <div class="pure-g-r content-ribbon">
-    {% if  messages %}
-    <aside class="pure-u-1">
-        {% for msg in messages %}
-            <p class="msgformat">{{msg}}</p>
-        {% endfor %}
-    </aside>
-    {% endif %}
+
+        </ul>
+    </header>
+    <!-- </div> -->
+    <div class="content">
+        <!-- Menssagens -->
+        <div class="pure-g-r content-ribbon">
+            {% if messages %}
+            <aside class="pure-u-1">
+                {% for msg in messages %}
+                <p class="msgformat">{{msg}}</p>
+                {% endfor %}
+            </aside>
+            {% endif %}
+        </div>
+
+        {% block content %}{% endblock %}
+        <div class="bd-footer text-muted">
+            <div class="container-fluid p-3 p-md-5">
+                <p>
+                    Simple MOOC - Uma simples plataforma de ensino a distância
+                </p>
+                <p>
+                    Copyright &copy; 2017
+                <a href="https://github.com/carloscacho/simplemocFunc" target="_blank"><i class="fa fa-github"></i>/carloscacho</a>
+                </p>
+                
+            </div>
+
+        </div>
     </div>
 
-    {% block content %}{% endblock %}
-    <div class="footer">
-        Simple MOOC - Uma simples plataforma de ensino a distância
-    </div>
-</div>
-
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+        crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('body').bootstrapMaterialDesign();
+        });
+    </script>
 </body>
+
 </html>

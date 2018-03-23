@@ -166,7 +166,7 @@ form.pure-form-aligned ul.errorlist li {
 .inner p {
     margin-top: 0;
 }
-ul.breadcrumb {
+/* ul.breadcrumb {
     padding: 0;
 }
 ul.breadcrumb li {
@@ -175,7 +175,7 @@ ul.breadcrumb li {
 ul.breadcrumb li a {
     display: inline-block;
     padding: 0.3em 0.7em;
-}
+} */
 aside {
     background: #1f8dd6;
     padding: 0.3em 1em;
@@ -272,4 +272,18 @@ aside a, aside a:visited {
 }
 .fright {
     float: right;
+}
+
+.navbar{
+    background-color: #3b8bba;
+}
+
+.down-item{
+    margin-top: 8px;
+}
+.dropdown-toggle{
+    color: #fff;
+}
+.bd-footer{
+    background-color: rgb(212, 209, 209);
 }
