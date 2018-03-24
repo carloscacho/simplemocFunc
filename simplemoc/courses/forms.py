@@ -15,6 +15,10 @@ class ContactCourse(forms.Form):
 	message = forms.CharField(
 		label='Messagens/Dúvidas',
 		widget=forms.Textarea)
+		
+	name.widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite seu nome'})
+	email.widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite seu e-mail'})
+	message.widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite sua Mensagem'})
 
 	def send_mail(self, course):
 		subject = '[%s] contato' % course

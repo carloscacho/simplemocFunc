@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Simple MOOC - Uma simples plataforma de ensino a distância" />
     <title>Simple MOOC</title>
+    <link href="https://png.icons8.com/metro/50/000000/graduation-cap.png" rel="icon" type="image/png" />
+
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
         integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous"> -->
@@ -17,42 +19,52 @@
 
 <body>
     <!-- <div class="header">     -->
-    <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
-        <a class="navbar-brand mr-0 mr-md-2" href="{% url 'home' %}">
+    <nav class="navbar navbar-expand-lg navbar-dark justify-content-between">
+    {% comment %} " flex-column flex-md-row bd-navbar"> {% endcomment %}
+        <a class="navbar-brand" href="{% url 'home' %}">
             <i class="fa fa-graduation-cap"></i> SIMPLE MOOC</a>
-        <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+        {% comment %} button colapsed {% endcomment %}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <li class="nav-item down-item">
-                <a class="nav-link active" href="{% url 'home' %}">Início</a>
-            </li>
-            <li class="nav-item down-item">
-                <a class="nav-link active" href="{% url 'courses' %}">Cursos</a>
-            </li>
-            <li class="nav-item down-item">
-                <a class="nav-link active" href="{% url 'contact' %}">Contato</a>
-            </li>
-            {% if user.is_authenticated %}
-            <li class="nav-item">
-                <div class="btn-group">
-                    <button class="btn dropdown-toggle" type="button" id="buttonMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Ola {{ user }}
-                    </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% comment %} "> {% endcomment %}
 
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{% url 'dashboard' %}">Painel</a>
-                        <a class="dropdown-item" href="{% url 'logout' %}">Sair</a>
+                <li class="nav-item down-item">
+                    <a class="nav-link active" href="{% url 'home' %}">Início</a>
+                </li>
+                <li class="nav-item down-item">
+                    <a class="nav-link active" href="{% url 'courses' %}">Cursos</a>
+                </li>
+                <li class="nav-item down-item">
+                    <a class="nav-link active" href="{% url 'contact' %}">Contato</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <div class="btn-group">
+                        <button class="btn dropdown-toggle" type="button" id="buttonMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Ola {{ user }}
+                        </button>
+
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'dashboard' %}">Painel</a>
+                            <a class="dropdown-item" href="{% url 'logout' %}">Sair</a>
+                        </div>
                     </div>
-                </div>
 
-            </li>
-            {% else %}
-            <li class="nav-item down-item">
-                <a class="nav-link active" href="{% url 'login' %}">Entrar</a>
-            </li>
-            {% endif %}
+                </li>
+                {% else %}
+                <li class="nav-item down-item">
+                    <a class="nav-link active" href="{% url 'login' %}">Entrar</a>
+                </li>
+                {% endif %}
 
-        </ul>
-    </header>
+            </ul>
+        </div>
+    </nav>
     <!-- </div> -->
     <div class="content">
         <!-- Menssagens -->
@@ -65,9 +77,7 @@
                 {% endfor %}
             </aside>
         </div>
-        {% endif %}
-        
-        {% block content %}{% endblock %}
+        {% endif %} {% block content %}{% endblock %}
 
         <div class="bd-footer text-muted">
             <div class="container-fluid p-3 p-md-5">

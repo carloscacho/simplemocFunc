@@ -2,17 +2,17 @@
 <div class="jumbotron jumbotron-fluid">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-3">
+			<div class="col-4">
 
 				{% if course.image %}
 
-				<img class="rounded float-left" src="{{ course.image.url }}" alt="{{ course }}" /> {% else %}
+				<img class=" img-fluid rounded float-left" src="{{ course.image.url }}" alt="{{ course }}" /> {% else %}
 
-				<img class="rounded float-left" src="{% static 'img/course.img.png' %}" alt="{{course}}" /> {% endif%}
+				<img class=" img-fluid rounded float-left" src="{% static 'img/course.img.png' %}" alt="{{course}}" /> {% endif%}
 
 			</div>
 			<div class="col-8">
-				<div class="ml-5">
+				<div class="ml-2">
 					<h1>
 						{{ course }}
 					</h1>
@@ -30,45 +30,50 @@
 <div class="content">
 	<div class="row justify-content-center">
 		<div class="col-10">
-			<div class="l-box">
-				<h4 class="content-subhead">Sobre o Curos</h4>
+			<div class="card box-shadow mb-4 h-md-250">
+				<div class="card-body">
+					<h4 class="card-header">Sobre o Curos</h4>
+					<p class="card-text">
+						{{ course.about | linebreaks }}
+					</p>
+				</div>
 
-				{{ course.about | linebreaks }}
+				<!-- forumlario de duvidas -->
+				<div class="card-footer" id="contato">
 
+
+					<form action="#contato" class="pure-form pure-form-aligned" method="POST">
+						{% csrf_token %}
+						<!-- <fieldset> -->
+
+						<h3>Tire sua dúvida sobre o curso</h3>
+						{% if isValid %}
+						<h4> Menssagem enviada com sucesso</h4>
+						{% endif %} {% for field in form %}
+						<div class="form-group mr-5 ">
+							{{ field.label_tag }} {{ field }} {% if field.errors %}
+							<ul class="errorlist">
+								{% for error in field.errors %}
+								<li> {{error}} </li>
+								{% endfor %}
+
+							</ul>
+
+							{% endif %}
+						</div>
+						{% endfor %}
+
+
+						<input type="submit" class="btn btn-primary" value="Enviar" />
+
+
+
+						<!-- </fieldset> -->
+					</form>
+
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="row" id="contato">
-		<div class="col-10">
-			<h3>Tire sua dúvida sobre o curso</h3>
-			{% if isValid %}
-			<h4> Menssagem enviada com sucesso</h4>
-			{% endif %}
-			<form action="#contato" class="pure-form pure-form-aligned" method="POST">
-				{% csrf_token %}
-				<fieldset>
 
-					{% for field in form %}
-					<div class="pure-control-group">
-						{{ field.label_tag }} {{ field }} {% if field.errors %}
-						<ul class="errorlist">
-							{% for error in field.errors %}
-							<li> {{error}} </li>
-							{% endfor %}
-
-
-						</ul>
-
-						{% endif %}
-					</div>
-					{% endfor %}
-
-					<div class="pure-controls">
-						<input type="submit" class="pure-button pure-button-primary" value="Enviar" />
-
-					</div>
-				</fieldset>
-			</form>
-		</div>
-	</div>
 	{% endblock content %}

@@ -128,7 +128,7 @@ ul.errorlist li {
     border: none;
     padding: 0;
 }
-form.pure-form-aligned ul.errorlist li {
+/* form.pure-form-aligned ul.errorlist li {
     padding-left: 11.5em;
 }
 .pure-form label {
@@ -143,11 +143,11 @@ form.pure-form-aligned ul.errorlist li {
     width: 100%;
     max-width: 350px;
     margin-bottom: 0.3em;
-}
-.pure-form textarea {
+} */
+/* .pure-form textarea {
     max-width: 450px;
-}
-.pure-form .pure-control-group {
+} */
+/* .pure-form .pure-control-group {
     margin-bottom: 1em;
 }
 .pure-button-primary {
@@ -155,7 +155,7 @@ form.pure-form-aligned ul.errorlist li {
     color: white;
     padding: 0.5em 2em;
     border-radius: 5px;
-}
+} */
 
 .inner {
     padding: 0em 1em;
@@ -277,6 +277,7 @@ aside a, aside a:visited {
 
 .down-item{
     margin-top: 8px;
+    padding-left: 8px;
 }
 .dropdown-toggle{
     color: #fff;
@@ -284,3 +285,7 @@ aside a, aside a:visited {
 .bd-footer{
     background-color: rgb(212, 209, 209);
 }
+.collapse{
+    padding-top: 5px;
+}
+
