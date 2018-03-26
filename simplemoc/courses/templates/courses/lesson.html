@@ -11,35 +11,40 @@
 
 {% block dashboard_content %}
 
-<div class="well">
-	<h2><a href="{% url 'lesson' course.slug lesson.pk %}">{{lesson}}</a></h2>
-	<p>
+<div class="card box-shadow mb-4 p-2h-md-250">
+	<h2 class="card-header">
+		<a href="{% url 'lesson' course.slug lesson.pk %}">{{lesson}}</a>
+	</h2>
+	<p class="card-text">
 		{{lesson.description}}
 	</p>
 </div>
 
-<div class="well">
-	<h3>Material da Aula</h3>
+<div class="card box-shadow mb-4 p-2h-md-250">
+	<h3 class="card-header">Materiais da Aula</h3>
 
 	{% for material in lesson.materials.all %}
 	
 		{% if material.is_embendded %}
-		<div class="well">
-			<h4> video: {{material}}</h4>
-			<p>
-			{{material.embendded|safe}}
-			</p>
+		<div class="card box-shadow mb-4 p-2h-md-250">
+			<h4 class="card-header"> video: {{material}}</h4>
+			<div class="embed-responsive embed-responsive-16by9">
+				{{material.embendded|safe}}
+			</div>
+			
+			
 		</div>
 		{% endif %}
 	
 	{% endfor %}
 	
-	<table  class="pure-table">
+	<h4 class="card-title">Materiais Extras</h4>
+	<table  class="table table-hover">
 		<thead>
 			<tr>
-				<th>Nome
+				<th scope="col">Nome
 				</th>
-				<th>Ação
+				<th scope="col">Ação
 				</th>
 			</tr>
 
@@ -48,8 +53,8 @@
 	{% for material in lesson.materials.all %}
 		{% if not material.is_embendded and  material.file %}
 
-				<tr class="{% cycle '' 'pure-table-odd' %}">
-					<td>
+				<tr>
+					<td scope="row">
 						{{material}}
 					</td>
 					<td>
@@ -59,8 +64,6 @@
 						</a>
 					</td>
 				</tr>
-			
-		
 		{% endif %}
 	{% endfor %}
 	</tbody>

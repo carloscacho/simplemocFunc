@@ -19,8 +19,8 @@
 
 <body>
     <!-- <div class="header">     -->
-    <nav class="navbar navbar-expand-lg navbar-dark justify-content-between">
-    {% comment %} " flex-column flex-md-row bd-navbar"> {% endcomment %}
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top justify-content-between">
+        {% comment %} " flex-column flex-md-row bd-navbar"> {% endcomment %}
         <a class="navbar-brand" href="{% url 'home' %}">
             <i class="fa fa-graduation-cap"></i> SIMPLE MOOC</a>
         {% comment %} button colapsed {% endcomment %}
@@ -70,12 +70,17 @@
         <!-- Menssagens -->
 
         {% if messages %}
-        <div class="row">
-            <aside class="col-5">
+        <div class="row msgs">
+            <div class="col-12">
                 {% for msg in messages %}
-                <p class="msgformat">{{msg}}</p>
+                <div id="alert-show" class="alert alert-dismissible fade show alert-{{ msg.tags }}" role="alert">
+                    <strong>{{ msg }}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 {% endfor %}
-            </aside>
+            </div>
         </div>
         {% endif %} {% block content %}{% endblock %}
 
@@ -106,6 +111,7 @@
             $('body').bootstrapMaterialDesign();
         });
     </script>
+    <script src="../static/js/boots.js" />
 </body>
 
 </html>

@@ -1,25 +1,23 @@
 {% extends "courses/course_dashboard.html" %}
 {% load static %}
 {% block dashboard_content %}
-<div class="well">
+<div class="card box-shadow mb-4 p-2h-md-250">
 	<div class="splash">
-        <div class="pure-g-r">
-            <div class="col-10">
-                <div class="l-box splash-text">
-                    <h1 class="splash-head">
+            <div class="col-12">
+               
+                    <h1 class="card-header">
                         {{ course }}
                     </h1>
-                    <h2 class="splash-subhead">
+                    <h3 class="card-title pt-3">
                         {{ course.description }}
-                    </h2>
+					</h3>
 
-                </div>
+                
             </div>
-        </div>
     </div>
     <div class="content">
         <div class="row">
-            <div class="col-16-24">
+            <div class="col-8">
                 <div class="l-box">
                     <h4 class="content-subhead">Sobre o Curos</h4>
 					
@@ -27,16 +25,16 @@
 
                 </div>
             </div>
-            <div class="col-7-24">
+            <div class="col-4">
                 <div class="l-box">
 					{% if course.image %}
 
-                    <img class="pure-img" src="{{ course.image.url }}"
+                    <img class="img-fluid" src="{{ course.image.url }}"
                          alt="{{ course }}" />
 
                 	{% else %}
 
-					<img class="pure-img" src= "{% static 'img/course.img.png' %}"
+					<img class="img-fluid" src= "{% static 'img/course.img.png' %}"
                          alt="{{course}}" />
 
                 	{% endif%}
@@ -45,20 +43,20 @@
         </div>
 
 
-		<h4> Aulas Disponibilizadas </h4>
-		<table class="pure-table">
+		<h4 class="card-header"> Aulas Disponibilizadas </h4>
+		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th>
+					<th scope="col">
 						Tema
 					</th>
-					<th>
+					<th scope="col">
 						Descrição da Aula
 					</th>
-					<th>
+					<th scope="col">
 						Liberado em 
 					</th>
-					<th>
+					<th scope="col">
 						Acessar
 					</th>
 				</tr>
@@ -66,7 +64,7 @@
 			<tbody>
 				{% for lesson in lessons %}
 					<tr>
-						<td>
+						<td scope="row">
 							{{lesson}}
 						</td>
 						<td>
@@ -98,6 +96,6 @@
 		</table>
 	</div>
 
-
+</div>
 
 {% endblock dashboard_content%}

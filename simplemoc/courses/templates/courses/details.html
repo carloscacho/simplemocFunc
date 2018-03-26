@@ -51,7 +51,8 @@
 						<h4> Menssagem enviada com sucesso</h4>
 						{% endif %} {% for field in form %}
 						<div class="form-group mr-5 ">
-							{{ field.label_tag }} {{ field }} {% if field.errors %}
+							<label class="bmd-label-floating" for="{{ field.name }}">{{ field.label }}</label>
+							{{ field }} {% if field.errors %}
 							<ul class="errorlist">
 								{% for error in field.errors %}
 								<li> {{error}} </li>
@@ -64,7 +65,7 @@
 						{% endfor %}
 
 
-						<input type="submit" class="btn btn-primary" value="Enviar" />
+						<input type="submit" class="btn btn-outline-primary" value="Enviar" />
 
 
 

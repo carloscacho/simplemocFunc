@@ -32,7 +32,8 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 	date_joined = models.DateTimeField('Data de entrada', auto_now_add=True)
 	is_trusty = models.BooleanField(_('trusty'), default=False,
 		help_text=_('Designates whether this user has confirmed his account.'))
-	
+		
+
 	objects = UserManager()
 
 	

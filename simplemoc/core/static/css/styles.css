@@ -288,4 +288,18 @@ aside a, aside a:visited {
 .collapse{
     padding-top: 5px;
 }
+.list-group-item{
+    padding-top: 5px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    
+}
 
+.msgs{
+    position: absolute;
+    top: 10%;
+    left: 70%;
+    float: right;
+    z-index: 3;
+}

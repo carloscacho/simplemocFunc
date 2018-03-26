@@ -4,12 +4,16 @@
 {% block dashboard_content %}
 {% for announcement in announcements  %}
 	
-<div class="well">
-	<h2><a href="{% url 'show_announcement' course.slug announcement.pk %}">
+<div class="card box-shadow mb-4 h-md-250">
+	<h2 class="card-header">
+		<a href="{% url 'show_announcement' course.slug announcement.pk %}">
 	{{announcement.title}}</a>
 	</h2>
-	<p>{{announcement.content|linebreaks}}</p>
-	<p>
+	<div class="p-3">
+		<p class="card-text">{{announcement.content|linebreaks}}</p>
+	</div>
+	
+	<p class="card-footer">
 		<a href="{% url 'show_announcement' course.slug announcement.pk %}#comm">
 		<i class="fa fa-comments-o"></i>
 		{% with total=announcement.comments.count %}
@@ -20,8 +24,8 @@
 	</p>
 </div>
 {% empty %}
-	<div class="well">
-		<h2>Esse Curso não tem aulas dispóniveis</h2>
+	<div class="card">
+		<h2 class="card-header">Esse Curso não tem aulas dispóniveis</h2>
 	</div>
 {% endfor %}	
 {% endblock dashboard_content %}

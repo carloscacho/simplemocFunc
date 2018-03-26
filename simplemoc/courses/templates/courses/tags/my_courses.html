@@ -1,6 +1,7 @@
-<li class="pure-menu-heading" style="border-bottom: 1px solid gray;"> Meus Cursos</a>
+<li class="card-header"> Meus Cursos</a>
 {% for enroll in enrollments  %}
-	<li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'coursepage' enroll.course.slug %}">
+	<li class="list-group-item">
+		<a class="list-group-item list-group-item-action" href="{% url 'coursepage' enroll.course.slug %}">
 	<i class="fa fa-book"></i>
 	{{enroll.course}}
 	</a></li>

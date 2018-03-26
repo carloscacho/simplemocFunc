@@ -1,14 +1,14 @@
 {% extends 'courses/course_dashboard.html' %}
 
 {% block dashboard_content %}
-<div class="well">
+<div class="card">
 	<form method="POST" action="">
 		{% csrf_token %}
 		<h2> Curso {{course}}</h2>
 		<h3>Você deseja realmente Cancelar a inscrição deste curso? </h3>
-		<div class="pure-controls">
-			<button class="pure-button button-error" type="subimit" name="confirmar"> comfirmar</button>  
-			<a href="{% url 'coursepage' course.slug %}" class="pure-button">
+		<div class="btn-group">
+			<button class="btn btn-outline-danger" type="subimit" name="confirmar"> comfirmar</button>  
+			<a href="{% url 'coursepage' course.slug %}" class="ml-2 btn btn-outline-primary">
 			Cancelar
 			</a>
 		</div>

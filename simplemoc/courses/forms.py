@@ -16,9 +16,9 @@ class ContactCourse(forms.Form):
 		label='Messagens/Dúvidas',
 		widget=forms.Textarea)
 		
-	name.widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite seu nome'})
-	email.widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite seu e-mail'})
-	message.widget.attrs.update({'class': 'form-control', 'placeholder': 'Digite sua Mensagem'})
+	name.widget.attrs.update({'class': 'form-control'})
+	email.widget.attrs.update({'class': 'form-control'})
+	message.widget.attrs.update({'class': 'form-control'})
 
 	def send_mail(self, course):
 		subject = '[%s] contato' % course

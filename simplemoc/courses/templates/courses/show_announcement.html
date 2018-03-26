@@ -11,11 +11,11 @@
 {% block dashboard_content %}
 
 	
-<div class="well">
+<div class="card">
 	<h2>{{announcement.title}}</h2>
 	<p>{{announcement.content|linebreaks}}</p>
 </div>
-<div class="well">
+<div class="card">
 	<h4 id='comm'>Comentários
 	<a class='fright' href="#add_comments"></a></h4>
 	<hr />
@@ -35,14 +35,14 @@
 	<fieldset>
 		{{form.non_field_errors}}
 		{% for field in form %}
-		<div class="pure-control-group">
-			{{field.label_tag}}
+		<div class="form-group">
+			<label class="bmd-label-floating" for="{{ field.name }}">{{ field.label }}</label>
 			{{field}}
 			{{field.errors}}
 		</div>
 		{% endfor %}
-		<div class="pure-controls">
-			<input type="submit" value="Enviar" class="pure-button-primary">
+		<div class="btn-group">
+			<input type="submit" value="Enviar" class="btn btn-outline-primary">
 		</div>
 	</fieldset>
 		

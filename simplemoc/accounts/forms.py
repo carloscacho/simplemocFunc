@@ -14,6 +14,8 @@ class PasswordResetForm(forms.Form):
 
     email = forms.EmailField(label='E-mail')
 
+    email.widget.attrs.update({'class': 'form-control'})
+
     def clean_email(self):
         email = self.cleaned_data['email']
         if User.objects.filter(email=email).exists():
@@ -46,6 +48,14 @@ class RegisterForm(forms.ModelForm):
         label='Confirmação de Senha', widget=forms.PasswordInput
     )
 
+    password1.widget.attrs.update({'class': 'form-control'})
+    password2.widget.attrs.update({'class': 'form-control'})
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({'class': 'form-control'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control'})
+    
     #metodo que verifica se senha e confimação de senha, estão iguais 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -74,6 +84,12 @@ form para editar informação do usuário
 
 '''
 class EditAccountForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({'class': 'form-control'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control'})
+        self.fields['name'].widget.attrs.update({'class': 'form-control'})
 
     class Meta:
         model = User

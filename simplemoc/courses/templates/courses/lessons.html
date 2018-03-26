@@ -9,21 +9,25 @@
 
 {% block dashboard_content %}
 {% for lesson in course.release_lessons %}
-<div class="well">
-	<h2><a href="{% url 'lesson' course.slug lesson.pk %}">{{lesson}}</a></h2>
-
+<div class="card box-shadow mb-4 h-md-250">
+	<h2 class="card-header">
+		<a href="{% url 'lesson' course.slug lesson.pk %}">{{lesson}}</a>
+	</h2>
 	
-	<p>
+	<p class="card-text p-3">
 		{{lesson.description| truncatewords:30}}
-	<br/>
+	</p>
+	<div class="card-footer">
 		<a href="{% url 'lesson' course.slug lesson.pk %}">
 		<i class="fa fa-eye"></i>
 		Acessar Aula
 		</a>
-	</p>
+	</div>
+
+	
 </div>
 {% empty %}
-<div class="well">
+<div class="card">
 	<h2>
 		Nenhuma Aula Dsiponivel para esse Curso.
 	</h2>

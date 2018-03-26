@@ -5,26 +5,26 @@
 {% block content %}
 
 <div class="row">
-	<div class="col-6">
-		<h2>Informe seus Dados de Cadastro</h2>
-		<form class="pure-form pure-form-aligned" method="POST">
+	<div class="col-6 ml-4">
+		<h2>Informe seus Dados de Login</h2>
+		<form method="POST">
 		{% csrf_token %}
 			<fieldset>
 				
 				{{ form.non_field_errors }}
 				
 				{% for field in form %}
-					<div class="pure-control-group">
-					{{ field.label_tag }}
+					<div class="form-group">
+					<label for="{{ field.name }}">{{ field.label }}</label>
 					{{ field }}
-					{{ field.errors }} <br /> <br />
-					
+					{{ field.errors }} <br />
+					</div>
 				{% endfor %}
 
 				
 				
-				<div class="pure-controls">
-					<input class="pure-button pure-button-primary" type="submit" value="Entrar">
+				<div class="btn-group">
+					<input class="btn btn-outline-primary" type="submit" value="Entrar">
 
 				</div>
 

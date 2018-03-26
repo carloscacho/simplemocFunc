@@ -1,77 +1,82 @@
-{% extends "base.html" %}
-
-{% load course_tags %}
-
-{% block content %}
+{% extends "base.html" %} {% load course_tags %} {% block content %}
 <div class="row">
-	<div class="col">
+	<div class="col-12">
 		<ol class="breadcrumb">
 			{% block breadcrumb %}
-				<li class="breadcrumb-item active" aria-current="page" ><a href="{% url 'dashboard' %}"> Meu Painel</a></li>
+			<li class="breadcrumb-item active" aria-current="page">
+				<a href="{% url 'dashboard' %}"> Meu Painel</a>
+			</li>
 			{% endblock breadcrumb %}
 		</ol>
 	</div>
+</div>
+<div class="row">
+	<div class="col-3 ml-2">
+		<div class="card box-shadow mb-4 p-2h-md-250">
 
-	<div class="col-3">
-		<div class="pure-menu custom-restricted-width" style="border: 1px solid gray;">
-			
-			<ul class="pure-menu-list">
-				<li class="pure-menu-heading" style="border-bottom: 1px solid gray;">
-				<i class="fa fa-user"></i>
+			<ul class="list-group">
+				<li class="card-header active">
+					<i class="fa fa-user"></i>
 					Bem vindo, {{user}}
 				</li>
-				{% block extra_menu %}
-					
-				
-				{% my_courses user %}
+				{% block extra_menu %} {% my_courses user %}
 
-				<li class="pure-menu-heading" style="border-bottom: 1px solid gray;">Conta</li>
-				<li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'edit' %}">
-				<i class="fa fa-cog"></i>
-				Editar Conta</a></li>
-				<li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'edit_password' %}">
-				<i class="fa fa-lock"></i>
-				Editar Senha</a></li>
+
+				<li class="card-header	">Conta</li>
+				<li class="list-group-item">
+					<a class="list-group-item list-group-item-action" href="{% url 'edit' %}">
+						<i class="fa fa-cog"></i>
+						Editar Conta</a>
+				</li>
+
+				<li class="list-group-item">
+					<a class="list-group-item list-group-item-action" href="{% url 'edit_password' %}">
+						<i class="fa fa-lock"></i>
+						Editar Senha</a>
+				</li>
+
 
 				{% endblock extra_menu %}
 			</ul>
 		</div>
 	</div>
 
-	<div class="col" ></div>
-	
-	<div class="col-10">
+
+
+	<div class="col-6">
 		<div class="inner">
 			{% block dashboard_content %}
 			<h2> Meus Cursos</h2>
 
 			{% for enroll in enrollments %}
-				
-			<div class="well">
-				<h3>{{enroll.course}} ({{enroll.course.start_date | date:'d/m/Y'|default:'Sem Data' }})</h3>
-				
-				{{enroll.course.description | linebreaks}}
 
-				<div class="pure-controls">
-					<a href="{% url 'coursepage' enroll.course.slug %}" class="pure-button button-primary"> Acessar</a>
-					<a href="{% url 'undo_enrollment' enroll.course.slug %}" class="pure-button button-error">
+			<div class="card p-2 box-shadow mb-4 p-2h-md-250">
+				<h3 class="card-header">{{enroll.course}} ({{enroll.course.start_date | date:'d/m/Y'|default:'Sem Data' }})</h3>
+
+				<p class="card-text">
+					{{enroll.course.description | linebreaks}}
+				</p>
+				
+
+				<div class="btn-group">
+					<a href="{% url 'coursepage' enroll.course.slug %}" class="btn btn-raised ml-2 btn-outline-primary"> Acessar</a>
+					<a href="{% url 'undo_enrollment' enroll.course.slug %}" class="btn btn-raised ml-2 btn-danger">
 						Cancelar
 					</a>
 				</div>
-			</div>	
-			
+			</div>
+
 			{% empty %}
 			<aside class="col">
 				<p class="msgformat">
-					Você não está inscrito em nenhum curso 
+					Você não está inscrito em nenhum curso
 				</p>
 			</aside>
 
-			{% endfor %}
-
-			{% endblock dashboard_content %}
+			{% endfor %} {% endblock dashboard_content %}
 		</div>
 	</div>
 </div>
+
 
 {% endblock content %}
