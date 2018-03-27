@@ -13,8 +13,8 @@
     <!-- <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
     <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}" />
-    <script src="http://yui.yahooapis.com/3.12.0/build/yui/yui-min.js"></script>
-    <script src="https://github.com/yui/yui3-gallery/blob/master/src/gallery-simple-menu/js/simple-menu.js"></script>
+    {% comment %} <script src="http://yui.yahooapis.com/3.12.0/build/yui/yui-min.js"></script>
+    <script src="https://github.com/yui/yui3-gallery/blob/master/src/gallery-simple-menu/js/simple-menu.js"></script> {% endcomment %}
 </head>
 
 <body>
@@ -100,8 +100,7 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
         crossorigin="anonymous"></script>
     <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
@@ -110,8 +109,16 @@
         $(document).ready(function () {
             $('body').bootstrapMaterialDesign();
         });
+
+        $(document).ready( function () {
+            $('#alert-show').hide();
+            $('#alert-show').fadeTo(3000, 0.5 ).slideUp(500, function () {
+                $('#alert-show').slideUp(500);
+            });
+        });
+
     </script>
-    <script src="../static/js/boots.js" />
+    <script src=" {% static 'js/boots.js' %}" />
 </body>
 
 </html>

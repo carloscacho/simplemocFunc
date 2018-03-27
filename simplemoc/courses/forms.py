@@ -10,7 +10,7 @@ class ContactCourse(forms.Form):
 		)
 	
 	email = forms.EmailField(label='E-mail', 
-		required=False)
+		required=True)
 
 	message = forms.CharField(
 		label='Messagens/Dúvidas',
