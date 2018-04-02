@@ -12,14 +12,14 @@
         integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}" />
-    {% comment %} <script src="http://yui.yahooapis.com/3.12.0/build/yui/yui-min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}" /> {% comment %}
+    <script src="http://yui.yahooapis.com/3.12.0/build/yui/yui-min.js"></script>
     <script src="https://github.com/yui/yui3-gallery/blob/master/src/gallery-simple-menu/js/simple-menu.js"></script> {% endcomment %}
 </head>
 
 <body>
     <!-- <div class="header">     -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top justify-content-between">
+    <nav class="elevation navbar navbar-expand-lg navbar-dark sticky-top justify-content-between">
         {% comment %} " flex-column flex-md-row bd-navbar"> {% endcomment %}
         <a class="navbar-brand" href="{% url 'home' %}">
             <i class="fa fa-graduation-cap"></i> SIMPLE MOOC</a>
@@ -68,7 +68,10 @@
     <!-- </div> -->
     <div class="content">
         <!-- Menssagens -->
+        <div class="demo">
 
+        
+        
         {% if messages %}
         <div class="row msgs">
             <div class="col-12">
@@ -83,13 +86,13 @@
             </div>
         </div>
         {% endif %} {% block content %}{% endblock %}
-
-        <div class="bd-footer text-muted">
-            <div class="container-fluid p-3 p-md-5">
-                <p>
+    </div>
+        <div class="footer">
+            <div class="container">
+                <p class="text-muted">
                     Simple MOOC - Uma simples plataforma de ensino a distância
                 </p>
-                <p>
+                <p class="text-muted">
                     Copyright &copy; 2017
                     <a href="https://github.com/carloscacho/simplemocFunc" target="_blank">
                         <i class="fa fa-github"></i>/carloscacho</a>
@@ -110,13 +113,26 @@
             $('body').bootstrapMaterialDesign();
         });
 
-        $(document).ready( function () {
+        $(document).ready(function () {
             $('#alert-show').hide();
-            $('#alert-show').fadeTo(3000, 0.5 ).slideUp(500, function () {
+            $('#alert-show').fadeTo(3000, 0.5).slideUp(500, function () {
                 $('#alert-show').slideUp(500);
             });
         });
 
+        //        $('[data-toggle=offcanvas]').click(function() {
+        //            $('.row-offcanvas').toggleClass('active');
+        //            $('.collapse').toggleClass('in').toggleClass('d-print-none').toggleClass('d-print-block');
+        //        });
+
+        //menu
+        $('.btn-expand-collapse').click(function (e) {
+            $('.navbar-primary').toggleClass('collapsed');
+            $('.subitem').toggleClass('moveicon');
+
+            $('.fa-arrow-left').toggleClass('fa-arrow-right')
+           
+        });
     </script>
     <script src=" {% static 'js/boots.js' %}" />
 </body>

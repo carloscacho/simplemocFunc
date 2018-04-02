@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^', include('simplemoc.core.urls'), name='home'),
     url(r'^cursos/', include('simplemoc.courses.urls')),
     url(r'^contas/', include('simplemoc.accounts.urls')),
+    url(r'^forum/', include('simplemoc.forum.urls')),
     url(r'^admin/', admin.site.urls),
 ]
 

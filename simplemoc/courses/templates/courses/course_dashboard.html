@@ -8,37 +8,40 @@
 {% endblock breadcrumb %}
 
 {% block extra_menu %}
-	<li class="card-header">
-		
-			{{course}}
-		
-	</li>
-	<li class="list-group-item">
-		<a class="list-group-item list-group-item-action" href="{% url 'lessons' course.slug %}">
-		<i class="fa fa-video-camera"></i>
-		Aulas e materia
+	<li>
+		<a href="#">
+		<i class="fa fa-bookmark"></i>
+		<span class="nav-label">{{course}}</span>
 		</a>
-	</li>
+		<ul class="subitem">
+			<li>
+				<a href="{% url 'lessons' course.slug %}">
+				<i class="fa fa-video-camera"></i>
+				<span class="nav-label">Aulas e materia </span>
+				</a>
+			</li>
 
-	<li class="list-group-item">
-		<a class="list-group-item list-group-item-action" href="{% url 'courseinfo' course.slug %}">
-		<i class="fa fa-info-circle"></i>
-		Informações
-		</a>
-	</li>
+			<li>
+				<a href="{% url 'courseinfo' course.slug %}">
+				<i class="fa fa-info-circle"></i>
+				<span class="nav-label">Informações </span>
+				</a>
+			</li>
 
-	<li class="list-group-item">
-		<a class="list-group-item list-group-item-action" href="{% url 'coursepage' course.slug %}">
-		<i class="fa fa-envelope"></i>
-		Anúncios
-		</a>
-	</li>
+			<li>
+				<a href="{% url 'coursepage' course.slug %}">
+				<i class="fa fa-envelope"></i>
+				<span class="nav-label">Anúncios</span>
+				</a>
+			</li>
 
-	<li class="list-group-item">
-		<a class="list-group-item list-group-item-action" href="#">
-		<i class="fa fa-comments"></i>
-		Fórum de Dúvidas
-		</a>
+			<li>
+				<a href="#">
+				<i class="fa fa-comments"></i>
+				<span class="nav-label"> Fórum de Dúvidas</span>
+				</a>
+			</li>
+		</ul>
 	</li>
 {{ block.super }}
 {% endblock extra_menu %}

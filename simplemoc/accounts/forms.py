@@ -36,6 +36,9 @@ class PasswordResetForm(forms.Form):
         }
         send_mail_template(subject, template_name, context, [user.email])
 
+    class Meta:
+        fields = ['old_password', 'new_password1', 'new_password2']
+
 '''
 formulario de registro do usuário
 Esse form trabalha com valição da senha

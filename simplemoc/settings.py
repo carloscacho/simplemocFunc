@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'simplemoc.core',
     'simplemoc.courses',
     'simplemoc.accounts',
+    'simplemoc.forum',
     #libs
     'taggit'
 ]
