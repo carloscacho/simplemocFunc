@@ -15,9 +15,14 @@ from .models import Thread
 
 class ForumView(ListView):
     model = Thread
-    paginate_by = 10
+    paginate_by = 3
 
     template_name = 'forum/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ForumView, self).get_context_data(**kwargs)
+        context['tags'] = Thread.tags.all()
+        return context
 
 # metodo de criação da view
 indexForum = ForumView.as_view()

@@ -35,6 +35,12 @@ class Thread(models.Model):
 
 
 class Replay(models.Model):
+    thread = models.ForeignKey(
+        Thread, 
+        verbose_name='tópico',
+        related_name='replies',
+        on_delete=models.CASCADE
+        )
     replay = models.TextField('Resposta')
     
     author = models.ForeignKey(
@@ -57,6 +63,6 @@ class Replay(models.Model):
         return self.replay
     
     class Meta:
-        verbose_name= 'Tópico'
-        verbose_name_plural = 'Tópicos'
+        verbose_name= 'Reposta'
+        verbose_name_plural = 'Respostas'
         ordering = ['-correct', 'replay_up', 'created']

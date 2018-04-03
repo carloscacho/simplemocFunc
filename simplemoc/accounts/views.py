@@ -41,6 +41,8 @@ def register(request):
             return redirect('home')
     else:
         form = RegisterForm()
+        form.fields['username'].widget.attrs.update({'class': 'form-control'})
+        form.fields['password'].widget.attrs.update({'class': 'form-control'})
     context = {
         'form': form
     }
