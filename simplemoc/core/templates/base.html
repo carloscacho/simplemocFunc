@@ -19,7 +19,7 @@
 
 <body>
     <!-- <div class="header">     -->
-    <nav class="elevation navbar navbar-expand-lg navbar-dark sticky-top justify-content-between">
+    <nav class="large elevation navbar navbar-expand-lg navbar-dark sticky-top justify-content-between">
         {% comment %} " flex-column flex-md-row bd-navbar"> {% endcomment %}
         <a class="navbar-brand" href="{% url 'home' %}">
             <i class="fa fa-graduation-cap"></i> SIMPLE MOOC</a>
@@ -66,7 +66,7 @@
         </div>
     </nav>
     <!-- </div> -->
-    <div class="content">
+    <div class="stretch content">
         <!-- Menssagens -->
         <div class="demo">
 
@@ -133,6 +133,18 @@
             $('.fa-arrow-left').toggleClass('fa-arrow-right')
            
         });
+
+        //resize menu bar
+        $(document).on("scroll", function() {
+
+            if($(document).scrollTop()>5) {
+                $("nav").removeClass("large").addClass("small");
+            } else {
+                $("nav").removeClass("small").addClass("large");
+            }
+            
+        });
+
     </script>
     <script src=" {% static 'js/boots.js' %}" />
 </body>
