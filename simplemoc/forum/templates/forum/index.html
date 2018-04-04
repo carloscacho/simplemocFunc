@@ -72,7 +72,7 @@
 
                 <div class="card p-2 box-shadow mb-4 p-2h-md-250">
                     <h3 class="card-header">
-                        <a href="#" title="">{{thread.title}}</a> | ({{thread.created | date:'d/m/Y'|default:'Sem Data' }})</h3>
+                        <a href="{{ thread.get_absolute_url }}" title="">{{thread.title}}</a> | ({{thread.created | date:'d/m/Y'|default:'Sem Data' }})</h3>
                     <p class="card-title">Criado por {{thread.author}} | {{thread.answers}} resposta{{ thread.answers| pluralize }} | {{thread.views}}
                         Visualizaç{{ thread.views| pluralize:"ão,ões" }} </p>
                     <strong class="card-text">

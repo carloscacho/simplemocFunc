@@ -7,6 +7,7 @@ from taggit.managers import TaggableManager
 
 class Thread(models.Model):
     title = models.CharField('Titulo', max_length=100)
+    slug = models.SlugField('Identificador', max_length=100, unique=True)
     
     body = models.TextField('Mensagem')
     
@@ -24,6 +25,11 @@ class Thread(models.Model):
     #atributos de auditoria
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField('Modificado em', auto_now=True)
+
+    @models.permalink
+    def get_absolute_url(self): 
+        return ('forum_thread',(), {'slug': self.slug})
+
 
     def __str__(self):
         return self.title
@@ -65,4 +71,25 @@ class Replay(models.Model):
     class Meta:
         verbose_name= 'Reposta'
         verbose_name_plural = 'Respostas'
-        ordering = ['-correct', 'replay_up', 'created']
+        ordering = ['-correct', '-replay_up', 'replay_down', 'created']
+
+# contabilizar o numero de respostas
+def post_save_replay(created, instance, **kwargs):
+    instance.thread.answers = instance.thread.replies.count()
+    instance.thread.save()
+    if instance.correct:
+        instance.thread.replies.exclude(pk=instance.pk).update(
+            correct=False
+        )
+
+def post_delete_replay(instance, **kwargs):
+    instance.thread.answers = instance.thread.replies.count()
+    instance.thread.save()
+
+models.signals.post_save.connect(
+    post_save_replay, sender=Replay, dispatch_uid='post_save_replay'
+)
+
+models.signals.post_delete.connect(
+    post_delete_replay, sender=Replay, dispatch_uid='post_delete_replay'
+)

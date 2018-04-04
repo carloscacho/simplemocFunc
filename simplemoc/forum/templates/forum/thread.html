@@ -1,0 +1,150 @@
+{% extends "base.html" %} {% block content %}
+
+
+<div class="row">
+    <div class="col-12">
+        <ol class="breadcrumb">
+            {% block breadcrumb %}
+            <li class="breadcrumb-item active" aria-current="page">
+                <a href="{{ object.get_absolute_url }}"> {{ object }}</a>
+            </li>
+            {% endblock breadcrumb %}
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="column col-sm-3 col-xl-3 sidebar-offcanvas" id="sidebar">
+            <div class="card">
+
+                <p class="card-header"> Filtros </p>
+
+                <ul>
+                    <li class="list-group-item list-group-item-action">
+                        <a href="?order=">
+                            <i class="fa fa-refresh"></i>
+                            Mais Recentes
+                        </a>
+                    </li>
+
+                    <li class="list-group-item list-group-item-action">
+                        <a href="?order=views">
+                            <i class="fa fa-eye"></i>
+                            Mais Visualizados
+                        </a>
+                    </li>
+
+                    <li class="list-group-item list-group-item-action">
+                        <a href="?order=comments">
+                            <i class="fa fa-comments"></i>
+                            Mais Comentados
+                        </a>
+                    </li>
+
+
+                    <p class="card-header">
+                        <i class="fa fa-tags"></i>Tags
+                    </p>
+
+                    <li>
+                        {%for tag in tags%}
+                        <a class="list-item list-item-action" href="{% url 'forum_tagged' tag.slug %}" title="tag {{tag}}">
+                            <i class="fa fa-tag"> {{tag}}</i>
+
+                        </a>
+                        {% endfor %}
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+
+
+
+        <div class="column col-sm-9 col-xl-8" id="main">
+            <div class="inner">
+                {% block dashboard_content %}
+                <h2> Tópico de Duvidas</h2>
+
+                <div class="card p-2 box-shadow mb-4 p-2h-md-250">
+                    <h3 class="card-header">
+                        {{ object }} </h3>
+                    <p class="card-title">Criado por {{object.author}} </p>
+                    <strong class="card-text"> {{object.body | linebreaks }}
+                    </strong>
+
+
+                    <div class="card-footer">
+                        Tags: {% for tag in object.tags.all %}
+
+                        <a href="{% url 'forum_tagged' tag.slug %}" title="tag {{tag}}">{{ tag }}</a>
+                        {%if not forloop.last%},{% endif %} {% endfor %}
+                        <p>
+                            <a>Criado a {{thread.created | timesince}} atrás</a>
+                        </p>
+                    </div>
+                </div>
+
+
+                {% endblock dashboard_content %}
+            </div>
+
+            <form action="#contato" class="pure-form pure-form-aligned" method="POST">
+                {% csrf_token %}
+                <!-- <fieldset> -->
+                <div class="card p-2 box-shadow mb-4 p-2h-md-250">
+                    <h3>Respostas para o tópico</h3>
+                    <!-- respostas já cadastradas -->
+                    {%for replay in object.replies.all %}
+                    <div class="card box-shadow mb-2">
+                        
+                        <p class="card-header">
+                            <strong>{{replay.author}}</strong> respondeu à {{replay.created | timesince}}:                 
+                        {%if user.is_authenticated %}
+                        <a href="{%url 'forum_replay_down' replay.pk %}" class="float-right btn btn-outline-danger "> <i class="fa fa-chevron-down"></i> {{replay.replay_down}} </a>
+                        <a href="{%url 'forum_replay_up' replay.pk %}" class="float-right btn btn-outline-primary mr-2"> <i class="fa fa-chevron-up"></i> {{replay.replay_up}} </a>
+                        
+                        {%endif%}
+                        </p>
+
+                        
+                        <p class="card-title">{{replay.replay}}</p>
+                        <div class="card-footer">
+                            {% if replay.correct %}
+                                <span class="btn btn-outline-primary"> <i class="fa fa-check"></i> Resposta correta segundo o Author</span>
+                                {% if replay.author == user %}
+                                    <a href="{%url 'forum_replay_incorrect' replay.pk %}" title="" class="float-right btn btn-danger">Cancelar Resposta</a>
+                                {% endif%}
+                            {% elif replay.author == user %}
+                                <a href="{%url 'forum_replay_correct' replay.pk %}" title="" class="float-right btn btn-primary">Resposta Correta</a>
+                            {% endif%}
+                        </div>
+                        
+                    </div>
+                    {%endfor%}
+                    <!-- formulario de respostas -->
+                    {% for field in form %}
+                    <div class="form-group mr-5 ">
+                        <label class="bmd-label-floating" for="{{ field.name }}">{{ field.label }}</label>
+                        {{ field }} 
+                        {{ field.errors }}
+                    </div>
+                    {% endfor %}
+
+
+                    <input type="submit" class="btn btn-outline-primary" value="Enviar" />
+
+
+
+                    <!-- </fieldset> -->
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

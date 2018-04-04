@@ -1,9 +1,12 @@
-from django.shortcuts import render
-from django.views.generic import ListView, TemplateView, View
-
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import (ListView, TemplateView, View, DetailView)
+from django.contrib import messages
 #my imports
 
-from .models import Thread
+from .models import Thread, Replay
+from .forms import ReplayForm
+
+
 
 # Create your views here.
 
@@ -37,5 +40,87 @@ class ForumView(ListView):
         context['tags'] = Thread.tags.all()
         return context
 
+# cada topico 
+class ThreadView(DetailView):
+    model= Thread
+    template_name = 'forum/thread.html'
+
+    def get(self, request, *args, **kwargs):
+        response = super(ThreadView, self).get(request, *args, **kwargs)
+        if self.request.user.is_authenticated and (self.object.author != self.request.user):
+            self.object.views = self.object.view + 1
+            self.object.save()
+        return response
+
+    def get_context_data(self, **kwargs):
+        context = super(ThreadView, self).get_context_data(**kwargs)
+        context['tags'] = Thread.tags.all()
+        context['form'] = ReplayForm(self.request.POST or None)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        #infomar o usuario que para responder ele deve estar logado
+        if not self.request.user.is_authenticated:
+            messages.error(self.request, 'Para responder ao topico é necessario estar logado')
+            return redirect(self.request.path)
+
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        form = ReplayForm(self.request.POST or None)
+        if form.is_valid():
+            replay = form.save(commit=False)
+            replay.thread = self.object
+            replay.author = self.request.user
+            replay.save()
+            messages.success(self.request,'A Sua resposta foi envida com sucesso')
+            context['form'] = ReplayForm()
+        return self.render_to_response(context)
+
+class ReplayCorrectView(View):
+    correct = True
+
+    def get(self, request, pk):
+        replay = get_object_or_404(Replay, pk=pk, author=request.user)
+        replay.correct  = self.correct
+        replay.save()
+        messages.success(request, 'Resposta correta autualizada pelo Author')
+        return redirect(replay.thread.get_absolute_url())
+
+
+class ReplayIncorrectView(View):
+    correct = False
+
+    def get(self, request, pk):
+        replay = get_object_or_404(Replay, pk=pk, author=request.user)
+        replay.correct  = self.correct
+        replay.save()
+        messages.error(request, 'Cancelamento da Resposta correta feita pelo Author')
+        return redirect(replay.thread.get_absolute_url())
+
+class ReplayUpView(View):
+    
+    def get(self, request, pk):
+        replay = get_object_or_404(Replay, pk=pk, author=request.user)
+        replay.replay_up  = replay.replay_up + 1
+        replay.save()
+        messages.success(request, 'atualização da votação  positiva da resposta')
+        return redirect(replay.thread.get_absolute_url())
+
+class ReplayDownView(View):
+    
+    def get(self, request, pk):
+        replay = get_object_or_404(Replay, pk=pk, author=request.user)
+        replay.replay_down  = replay.replay_down + 1
+        replay.save()
+        messages.success(request, 'atualização da votação negativa da resposta')
+        return redirect(replay.thread.get_absolute_url())
+
 # metodo de criação da view
 indexForum = ForumView.as_view()
+threadForum = ThreadView.as_view()
+#view para  validar a resposta correta
+replayCorrect= ReplayCorrectView.as_view()
+replayIncorrect = ReplayIncorrectView.as_view()
+#views para votação das respostas
+replayUp = ReplayUpView.as_view()
+replayDown = ReplayDownView.as_view()

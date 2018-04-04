@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'simplemoc.accounts',
     'simplemoc.forum',
     #libs
-    'taggit'
+    'taggit',
+    'hitcount'
 ]
 
 MIDDLEWARE = [
@@ -150,3 +151,6 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'logout'
 AUTH_USER_MODEL = 'accounts.MyUser'
+
+# default value
+HITCOUNT_HITS_PER_IP_LIMIT = 2
