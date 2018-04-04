@@ -26,6 +26,10 @@ class ForumView(ListView):
             queryset = queryset.order_by('-views')
         elif order == 'comments':
             queryset = queryset.order_by('-answers')
+        tag = self.kwargs.get('tag', '')
+        if tag:
+            queryset = queryset.filter(tags__slug__icontains=tag)
+            
         return queryset
 
     def get_context_data(self, **kwargs):
