@@ -112,7 +112,7 @@
         <ul class="pagination justify-content-end">
             {% if page_obj.has_previous %}
             <li class="page-item">
-                <a class="page-link" href="?page={{page_obj.previus_page_number}}" tabindex="-1">Anterior</a>
+                <a class="page-link" href="?page={{page_obj.previous_page_number}}{%if request.GET.order%}&order={{request.GET.order}}{%endif%}" tabindex="-1">Anterior</a>
             </li>
             {% else %}
             <li class="page-item disabled">
@@ -124,11 +124,11 @@
             
                 {% if page == page_obj.number %}
                 <li class="page-item active">
-                    <a class="page-link" href="?page={{page}}">{{page}}</a>
+                    <a class="page-link" href="?page={{page}}{%if request.GET.order%}&order={{request.GET.order}}{%endif%}">{{page}}</a>
                 </li>
                 {%else%}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{page}}">{{page}}</a>
+                    <a class="page-link" href="?page={{page}}{%if request.GET.order%}&order={{request.GET.order}}{%endif%}">{{page}}</a>
                 </li>
                 {%endif%}
 
@@ -136,7 +136,7 @@
             
             {%if page_obj.has_next %}
             <li class="page-item">
-                <a class="page-link" href="?page={{page_obj.next_page_number}}">Próximo</a>
+                <a class="page-link" href="?page={{page_obj.next_page_number}}{%if request.GET.order%}&order={{request.GET.order}}{%endif%}">Próximo</a>
             </li>
             {% else %}
             <li class="page-item disabled">
