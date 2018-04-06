@@ -69,26 +69,24 @@
     <div class="stretch content">
         <!-- Menssagens -->
         <div class="demo">
-
-        
-        
-        {% if messages %}
-        <div class="row msgs">
-            <div class="col-12">
-                {% for msg in messages %}
-                <div id="alert-show" class="alert alert-dismissible fade show alert-{{ msg.tags }}" role="alert">
-                    <strong>{{ msg }}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+            {% if messages %}
+            <div class="row msgs">
+                <div class="col-12">
+                    {% for msg in messages %}
+                    <div id="alert-show" class="alert alert-dismissible fade show alert-{{ msg.tags }}" role="alert">
+                        <strong>{{ msg }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
+            {% endif %} {% block content %}{% endblock %}
         </div>
-        {% endif %} {% block content %}{% endblock %}
-    </div>
+        {% comment %} TODO precisa melhorar {% endcomment %}
         <div class="footer">
-            <div class="container">
+            <div class="container-fluid">
                 <p class="text-muted">
                     Simple MOOC - Uma simples plataforma de ensino a distância
                 </p>
@@ -131,20 +129,19 @@
             $('.subitem').toggleClass('moveicon');
 
             $('.fa-arrow-left').toggleClass('fa-arrow-right')
-           
+
         });
 
         //resize menu bar
-//        $(document).on("scroll", function() {
-//
-//            if($(document).scrollTop()>5) {
-//                $("nav").removeClass("large").addClass("small");
-//            } else {
-//                $("nav").removeClass("small").addClass("large");
-//            }
-//            
-//        });
-
+        //        $(document).on("scroll", function() {
+        //
+        //            if($(document).scrollTop()>5) {
+        //                $("nav").removeClass("large").addClass("small");
+        //            } else {
+        //                $("nav").removeClass("small").addClass("large");
+        //            }
+        //            
+        //        });
     </script>
     <script src=" {% static 'js/boots.js' %}" />
 </body>

@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block content%}
+{% extends "base.html" %} 
+{% block content%}
+{% load static %}
 <div class="row">
     <div class="col-12">
         <div class="jumbotron">
@@ -34,7 +36,7 @@
                 <!-- </div>
             <div class="col-3"> -->
                 <!-- <div class="l-box"> -->
-                <img class="card-img-right" src="http://placehold.it/400x250" alt="Vídeo aulas e materiais digitais.">
+                <img class="card-img-right" src="{% static 'img/video-aula-mat-digital.png' %}" alt="Vídeo aulas e materiais digitais.">
                 <!-- </div> -->
             </div>
         </div>
@@ -46,7 +48,7 @@
         <div class="col-10">
             <div class="card flex-md-row mb-4 box-shadow h-md-250">
                 <!-- <div class="l-box"> -->
-                <img class="card-img-left" src="http://placehold.it/400x250" alt="Fórum de Dúvidas">
+                <img class="card-img-left" src="{% static 'img/forum.png' %}" alt="Fórum de Dúvidas">
                 <!-- </div> -->
                 <!-- </div>
             <div class="col-8"> -->
@@ -77,18 +79,18 @@
                 <!-- </div>
         <div class="col-3"> -->
                 <!-- <div class="l-box"> -->
-                <img class="card-img-right" src="http://placehold.it/400x250" alt="Exercícios">
+                <img class="card-img-right" src="{% static 'img/mural-avisos.png' %}" alt="Exercícios">
                 <!-- </div> -->
             </div>
         </div>
 
     </div>
     <!-- qurto elemento -->
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-3">
         <div class="col-10">
             <div class="card flex-md-row mb-4 box-shadow h-md-250">
                 <!-- <div class="l-box"> -->
-                <img class="card-img-left" src="http://placehold.it/400x250" alt="Mural de Avisos">
+                <img class="card-img-left" src="{% static 'img/quiz.png' %}" alt="Mural de Avisos">
                 <!-- </div> -->
                 <!-- </div>
         <div class="col-8"> -->
