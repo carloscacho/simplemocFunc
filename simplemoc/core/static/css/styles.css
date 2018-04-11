@@ -407,3 +407,11 @@ li {
     -webkit-transition: .7s all;
     -o-transition: .7s all;
 }
+
+.hidden {
+    display: none;
+}
+
+.card-body{
+    margin: 1px;
+}

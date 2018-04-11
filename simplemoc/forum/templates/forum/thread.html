@@ -22,21 +22,21 @@
 
                 <ul>
                     <li class="list-group-item list-group-item-action">
-                        <a href="?order=">
+                        <a href="{% url 'forum' %}">
                             <i class="fa fa-refresh"></i>
                             Mais Recentes
                         </a>
                     </li>
 
                     <li class="list-group-item list-group-item-action">
-                        <a href="?order=views">
+                        <a href="{% url 'forum' %}?order=views">
                             <i class="fa fa-eye"></i>
                             Mais Visualizados
                         </a>
                     </li>
 
                     <li class="list-group-item list-group-item-action">
-                        <a href="?order=comments">
+                        <a href="{% url 'forum' %}?order=comments">
                             <i class="fa fa-comments"></i>
                             Mais Comentados
                         </a>
@@ -72,7 +72,7 @@
                     <h3 class="card-header">
                         {{ object }} </h3>
                     <p class="card-title">Criado por {{object.author}} </p>
-                    <strong class="card-text"> {{object.body | linebreaks }}
+                    <strong class="card-body"> {{object.body | linebreaks }}
                     </strong>
 
 
@@ -91,45 +91,81 @@
                 {% endblock dashboard_content %}
             </div>
 
-            <form action="#contato" class="pure-form pure-form-aligned" method="POST">
+            <form class="form-group" method="POST">
                 {% csrf_token %}
                 <!-- <fieldset> -->
-                <div class="card p-2 box-shadow mb-4 p-2h-md-250">
-                    <h3>Respostas para o tópico</h3>
+                <div class="card p-2 box-shadow mb-4 p-2h-md-250" id="div-comments">
+                    <p>
+
+                        <strong class="card-header">Respostas para o tópico</strong>
+
+                        <a href="#responder" class="float-right btn btn-outline-info">Reponder</a>
+                    </p>
+
+
                     <!-- respostas já cadastradas -->
+
                     {%for replay in object.replies.all %}
-                    <div class="card box-shadow mb-2">
-                        
-                        <p class="card-header">
-                            <strong>{{replay.author}}</strong> respondeu à {{replay.created | timesince}}:                 
-                        {%if user.is_authenticated %}
-                        <a href="{%url 'forum_replay_down' replay.pk %}" class="float-right btn btn-outline-danger "> <i class="fa fa-chevron-down"></i> {{replay.replay_down}} </a>
-                        <a href="{%url 'forum_replay_up' replay.pk %}" class="float-right btn btn-outline-primary mr-2"> <i class="fa fa-chevron-up"></i> {{replay.replay_up}} </a>
-                        
-                        {%endif%}
+
+                    <div class="replycard card {% if replay.correct %} border border-success {% else %} border border-info {% endif %} 
+                    box-shadow mb-2">
+
+                        <p class="card-header {% if replay.correct %} border-success {% else %} border-info {% endif %}">
+                            <strong>{{replay.author}}</strong> respondeu à {{replay.created | timesince}}: 
+                            
+                            {%if user.is_authenticated %}
+                            <a href="{%url 'forum_replay_down' replay.pk %}" class="float-right btn btn-outline-danger ">
+                                <i class="fa fa-chevron-down"></i> {{replay.replay_down}} </a>
+                            <a href="{%url 'forum_replay_up' replay.pk %}" class="float-right btn btn-outline-primary mr-2">
+                                <i class="fa fa-chevron-up"></i> {{replay.replay_up}} </a>
+
+                            {%endif%}
                         </p>
 
-                        
-                        <p class="card-title">{{replay.replay}}</p>
-                        <div class="card-footer">
-                            {% if replay.correct %}
-                                <span class="btn btn-outline-primary"> <i class="fa fa-check"></i> Resposta correta segundo o Author</span>
-                                {% if replay.author == user %}
-                                    <a href="{%url 'forum_replay_incorrect' replay.pk %}" title="" class="float-right btn btn-danger">Cancelar Resposta</a>
-                                {% endif%}
-                            {% elif replay.author == user %}
-                                <a href="{%url 'forum_replay_correct' replay.pk %}" title="" class="float-right btn btn-primary">Resposta Correta</a>
+
+                        <p class="card-body">{{replay.replay}}</p>
+                        <div class="card-footer {% if replay.correct %} border-success {% else %} border-info {% endif %}">
+                            {% if object.author == user %}
+
+                            <a href="{%url 'forum_replay_incorrect' replay.pk %}" title="" class="float-right btn btn-danger replay-cancel-lnk 
+                            {% if not replay.correct %} hidden {% endif %}">
+                                Cancelar Resposta
+                            </a>
+
+                            <span class="one btn btn-outline-primary replay-correct-msg 
+                            {% if not replay.correct %} hidden {% endif %}">
+                                <i class="fa fa-check"></i>
+                                Resposta correta segundo o Author
+                            </span>
+
+
+
+                            <a href="{%url 'forum_replay_correct' replay.pk %}" title="" class="float-right btn btn-primary replay-correct-lnk 
+                            {% if replay.correct %} hidden {% endif %}">
+                                Marcar Resposta Correta
+                            </a>
+
+                            {% elif replay.correct %}
+                            <span class="btn btn-outline-primary">
+                                <i class="fa fa-check"></i>
+                                Resposta correta segundo o Author
+                            </span>
                             {% endif%}
                         </div>
-                        
+
                     </div>
+
                     {%endfor%}
+                    {%if object.replies.all.count > 5 %}
+                    <div class="showbtn">
+                        <button class="showmore btn btn-outline-warning">Mostrar todos as respostas</button>
+                    </div>
+                    {%endif %}
                     <!-- formulario de respostas -->
                     {% for field in form %}
-                    <div class="form-group mr-5 ">
+                    <div id="responder" class="form-group mr-5 ">
                         <label class="bmd-label-floating" for="{{ field.name }}">{{ field.label }}</label>
-                        {{ field }} 
-                        {{ field.errors }}
+                        {{ field }} {{ field.errors }}
                     </div>
                     {% endfor %}
 
@@ -147,4 +183,77 @@
 
 </div>
 
-{% endblock %}
+{% endblock %} {% block scripts %}
+<script type="text/javascript">
+    //cancel response
+    $(".replay-cancel-lnk").on("click", (e) => {
+        e.preventDefault();
+        var $this = $(".replay-cancel-lnk");
+        var $p = $this.closest("div");
+        console.log($this.attr("href"))
+        $.get($this.attr("href"), (data) => {
+            console.log(data)
+            if (data.success) {
+                $p.find(".replay-correct-msg").addClass('hidden');
+                $this.addClass('hidden');
+                $p.find(".replay-correct-lnk").removeClass('hidden');
+            } else {
+                alert(data.message);
+            }
+        }, "json");
+        return false;
+    });
+
+
+    //correct response
+    $(".replay-correct-lnk").on("click", (e) => {
+        e.preventDefault();
+        const $this = $(e.target)
+        const $p = $this.closest("div");
+        console.log($(e.target))
+        $.get($this.attr("href"), (data) => {
+            console.log(data)
+            if (data.success) {
+                $("#div-comments .replay-correct-msg").addClass('hidden');
+                $("#div-comments .replay-cancel-lnk").addClass('hidden');
+                $("#div-comments .replay-correct-lnk").removeClass('hidden');
+
+                $p.find(".replay-correct-msg").removeClass('hidden');
+                $this.addClass('hidden');
+                $p.find(".replay-cancel-lnk").removeClass('hidden');
+            } else {
+                alert(data.message);
+            }
+        }, "json");
+
+        return false;
+
+    });
+
+    //Ocultar Comentarios 
+    $('.replycard').each((index, element) => {
+        if (index >= 5) {
+            $(element).addClass("hidden");
+        }
+    })
+
+    //Mostrar mais respostas
+    $('.showmore').on('click', (e) => {
+        e.preventDefault();
+        const $this = $(e.target)
+        const allCards = $('.replycard.hidden')
+        console.log(allCards.length)
+        allCards.each((index, element) => {
+            if(index < 5){
+                $(element).removeClass('hidden')
+            }
+    
+        })
+
+        if($('.replycard.hidden').length == 0){
+            $this.addClass('hidden')
+        }
+        
+    })
+</script>
+{% endblock%}

@@ -82,7 +82,8 @@
                     {% endfor %}
                 </div>
             </div>
-            {% endif %} {% block content %}{% endblock %}
+            {% endif %} 
+            {% block content %}{% endblock %}
         </div>
         {% comment %} TODO precisa melhorar {% endcomment %}
         <div class="footer">
@@ -106,7 +107,9 @@
         crossorigin="anonymous"></script>
     <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
         crossorigin="anonymous"></script>
+        {% block scripts %}{% endblock%}
     <script>
+
         $(document).ready(function () {
             $('body').bootstrapMaterialDesign();
         });

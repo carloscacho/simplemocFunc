@@ -41,8 +41,6 @@ def register(request):
             return redirect('home')
     else:
         form = RegisterForm()
-        form.fields['username'].widget.attrs.update({'class': 'form-control'})
-        form.fields['password'].widget.attrs.update({'class': 'form-control'})
     context = {
         'form': form
     }
@@ -99,8 +97,5 @@ def edit_password(request):
             context['success'] = True
     else:
         form = PasswordChangeForm(user=request.user)
-        form.fields['old_password'].widget.attrs.update({'class': 'form-control'})
-        form.fields['new_password1'].widget.attrs.update({'class': 'form-control'})
-        form.fields['new_password2'].widget.attrs.update({'class': 'form-control'})
     context['form'] = form
     return render(request, template_name, context)

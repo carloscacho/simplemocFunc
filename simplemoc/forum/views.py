@@ -1,6 +1,11 @@
+import json
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import (ListView, TemplateView, View, DetailView)
 from django.contrib import messages
+from django.http import HttpResponse
+
+from django.http import JsonResponse
 #my imports
 
 from .models import Thread, Replay
@@ -67,6 +72,7 @@ class ThreadView(DetailView):
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
         form = ReplayForm(self.request.POST or None)
+        
         if form.is_valid():
             replay = form.save(commit=False)
             replay.thread = self.object
@@ -76,6 +82,7 @@ class ThreadView(DetailView):
             context['form'] = ReplayForm()
         return self.render_to_response(context)
 
+#when check the correct awser 
 class ReplayCorrectView(View):
     correct = True
 
@@ -83,19 +90,29 @@ class ReplayCorrectView(View):
         replay = get_object_or_404(Replay, pk=pk, author=request.user)
         replay.correct  = self.correct
         replay.save()
-        messages.success(request, 'Resposta correta autualizada pelo Author')
-        return redirect(replay.thread.get_absolute_url())
+        message = 'Resposta correta autualizada pelo Author'
+        if request.is_ajax():
+            
+            return JsonResponse({'success': True, 'message': message})
+        else:
+            messages.success(request, message)
+            return redirect(replay.thread.get_absolute_url())
 
 
 class ReplayIncorrectView(View):
     correct = False
 
     def get(self, request, pk):
-        replay = get_object_or_404(Replay, pk=pk, author=request.user)
+        replay = get_object_or_404(Replay, pk=pk, thread__author=request.user)
         replay.correct  = self.correct
         replay.save()
-        messages.error(request, 'Cancelamento da Resposta correta feita pelo Author')
-        return redirect(replay.thread.get_absolute_url())
+        message = 'Cancelamento da Resposta correta feita pelo Author'
+        if request.is_ajax():
+            
+            return JsonResponse({'success': True, 'message': message})
+        else:
+            messages.error(request, message)
+            return redirect(replay.thread.get_absolute_url())
 
 class ReplayUpView(View):
     
@@ -109,11 +126,15 @@ class ReplayUpView(View):
 class ReplayDownView(View):
     
     def get(self, request, pk):
-        replay = get_object_or_404(Replay, pk=pk, author=request.user)
+        replay = get_object_or_404(Replay, pk=pk, thread__author=request.user)
         replay.replay_down  = replay.replay_down + 1
         replay.save()
-        messages.success(request, 'atualização da votação negativa da resposta')
-        return redirect(replay.thread.get_absolute_url())
+        message = 'atualização da votação negativa da resposta'
+        if request.is_ajax():
+            return JsonResponse({'success': True, 'message': message})
+        else:
+            messages.success(request, message)
+            return redirect(replay.thread.get_absolute_url())
 
 # metodo de criação da view
 indexForum = ForumView.as_view()
