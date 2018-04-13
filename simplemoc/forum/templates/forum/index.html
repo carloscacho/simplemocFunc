@@ -22,7 +22,7 @@
 
                 <ul>
                     <li class="list-group-item list-group-item-action">
-                        <a href="?order=">
+                        <a href="{% url 'forum' %}">
                             <i class="fa fa-refresh"></i>
                             Mais Recentes
                         </a>
@@ -66,6 +66,9 @@
         <div class="column col-sm-9 col-xl-8" id="main">
             <div class="inner">
                 {% block dashboard_content %}
+
+                <a href="{% url 'addtopico' %}" class="float-right btn btn-outline-info" >Adcionar novo Topico</a>
+
                 <h2> Forum de Duvidas</h2>
 
                 {% for thread in object_list %}

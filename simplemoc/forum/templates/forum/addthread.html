@@ -1,0 +1,187 @@
+{% extends "base.html" %} {% block content %}
+
+
+<div class="row">
+    <div class="col-12">
+        <ol class="breadcrumb">
+            {% block breadcrumb %}
+            <li class="breadcrumb-item active" aria-current="page">
+                <a href="{% url 'forum' %}">Forum</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                <a href="{% url 'addtopico' %}">Novo Topico</a>
+            </li>
+            {% endblock breadcrumb %}
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="column col-sm-3 col-xl-3 sidebar-offcanvas" id="sidebar">
+            <div class="card">
+
+                <p class="card-header"> Filtros </p>
+
+                <ul>
+                    <li class="list-group-item list-group-item-action">
+                        <a href="{% url 'forum' %}">
+                            <i class="fa fa-refresh"></i>
+                            Mais Recentes
+                        </a>
+                    </li>
+
+                    <li class="list-group-item list-group-item-action">
+                        <a href="{% url 'forum' %}?order=views">
+                            <i class="fa fa-eye"></i>
+                            Mais Visualizados
+                        </a>
+                    </li>
+
+                    <li class="list-group-item list-group-item-action">
+                        <a href="{% url 'forum' %}?order=comments">
+                            <i class="fa fa-comments"></i>
+                            Mais Comentados
+                        </a>
+                    </li>
+
+
+                    <p class="card-header">
+                        <i class="fa fa-tags"></i>Tags
+                    </p>
+
+                    <li>
+                        {%for tag in tags%}
+                        <a class="list-item list-item-action" href="{% url 'forum_tagged' tag.slug %}" title="tag {{tag}}">
+                            <i class="fa fa-tag"> {{tag}}</i>
+
+                        </a>
+                        {% endfor %}
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+
+
+
+        <div class="column col-sm-9 col-xl-8" id="main">
+            
+                {% block dashboard_content %}
+            
+
+
+                {% endblock dashboard_content %}
+                <h2> Criar novo Tópico de Duvidas</h2>
+
+                <div class="card p-2 box-shadow mb-4 p-2h-md-250">
+                   <!-- formulario de respostas -->
+                   <form class="form-group" method="POST">
+                    {% csrf_token %}
+                   {% for field in form %}
+                   <div id="responder" class="form-group mr-5 ">
+                       <label class="bmd-label-floating" for="{{ field.name }}">{{ field.label }}</label>
+                       {{ field }} {{ field.errors }}
+                   </div>
+                   {% endfor %}
+
+
+                   <input type="submit" class="btn btn-outline-primary" value="Enviar" />
+                   </form>
+                </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- 
+{% endblock %} {% block scripts %}
+<script type="text/javascript">
+    //cancel response
+    $(".replay-cancel-lnk").on("click", (e) => {
+        e.preventDefault();
+        var $this = $(".replay-cancel-lnk");
+        var $p = $this.closest("div");
+        console.log($this.attr("href"))
+        $.get($this.attr("href"), (data) => {
+            console.log(data)
+            if (data.success) {
+                $p.find(".replay-correct-msg").addClass('hidden');
+                $this.addClass('hidden');
+                $p.find(".replay-correct-lnk").removeClass('hidden');
+            } else {
+                alert(data.message);
+            }
+        }, "json");
+        return false;
+    });
+
+
+    //correct response
+    $(".replay-correct-lnk").on("click", (e) => {
+        e.preventDefault();
+        const $this = $(e.target)
+        const $p = $this.closest("div");
+        console.log($(e.target))
+        $.get($this.attr("href"), (data) => {
+            console.log(data)
+            if (data.success) {
+                $("#div-comments .replay-correct-msg").addClass('hidden');
+                $("#div-comments .replay-cancel-lnk").addClass('hidden');
+                $("#div-comments .replay-correct-lnk").removeClass('hidden');
+
+                $p.find(".replay-correct-msg").removeClass('hidden');
+                $this.addClass('hidden');
+                $p.find(".replay-cancel-lnk").removeClass('hidden');
+            } else {
+                alert(data.message);
+            }
+        }, "json");
+
+        return false;
+
+    });
+
+    //Ocultar Comentarios 
+    $('.replycard').each((index, element) => {
+        if (index >= 3) {
+            $(element).addClass("hidden");
+        }
+    })
+
+    //Mostrar mais respostas
+    $('.showmore').on('click', (e) => {
+        e.preventDefault();
+        const $this = $(e.target).parent("div")
+        const allCards = $('.replycard.hidden')
+        console.log(allCards.length)
+        allCards.each((index, element) => {
+            if(index < 3){
+                $(element).removeClass('hidden')
+            }
+    
+        })
+
+        if($('.replycard.hidden').length == 0){
+            $this.addClass('hidden')
+        }
+        
+    })
+
+        //Mostrar todas as respostas respostas
+        $('.showall').on('click', (e) => {
+            e.preventDefault();
+            const $this = $(e.target).parent("div")
+            const allCards = $('.replycard.hidden')
+            console.log(allCards.length)
+            allCards.each((index, element) => {
+                $(element).removeClass('hidden')
+                    
+            })
+
+            $this.addClass('hidden')
+            
+        })
+</script> -->
+{% endblock%}

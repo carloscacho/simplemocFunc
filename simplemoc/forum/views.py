@@ -9,7 +9,7 @@ from django.http import JsonResponse
 #my imports
 
 from .models import Thread, Replay
-from .forms import ReplayForm
+from .forms import ReplayForm, ThreadForm
 
 
 
@@ -45,6 +45,37 @@ class ForumView(ListView):
         context['tags'] = Thread.tags.all()
         return context
 
+class addThreadView(TemplateView):
+    model = Thread
+    template_name = 'forum/addthread.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(addThreadView, self).get_context_data(**kwargs)
+        context['tags'] = Thread.tags.all()
+        context['form'] = ThreadForm(self.request.POST or None)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        #infomar o usuario que para responder ele deve estar logado
+        if not self.request.user.is_authenticated:
+            messages.error(self.request, 'Para Criar um topico é necessario estar logado')
+            return redirect(self.request.path)
+
+        
+        context = {}
+        form = ThreadForm(self.request.POST or None)
+        
+        if form.is_valid():
+            topico = form.save(commit=False)
+            topico.author = self.request.user
+            m_tags = form.cleaned_data['tags_de_Busca']
+            topico.save()
+            for m_tag in m_tags:
+                topico.tags.add(m_tag)
+            messages.success(self.request,'O Topico foi criado com sucesso')
+            context['form'] = ThreadForm()
+        return redirect(self.request.path)
+
 # cada topico 
 class ThreadView(DetailView):
     model= Thread
@@ -53,7 +84,7 @@ class ThreadView(DetailView):
     def get(self, request, *args, **kwargs):
         response = super(ThreadView, self).get(request, *args, **kwargs)
         if self.request.user.is_authenticated and (self.object.author != self.request.user):
-            self.object.views = self.object.view + 1
+            self.object.views = self.object.views + 1
             self.object.save()
         return response
 
@@ -145,3 +176,5 @@ replayIncorrect = ReplayIncorrectView.as_view()
 #views para votação das respostas
 replayUp = ReplayUpView.as_view()
 replayDown = ReplayDownView.as_view()
+#add Page
+addtopico = addThreadView.as_view()

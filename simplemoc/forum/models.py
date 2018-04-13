@@ -3,6 +3,7 @@ from django.conf import settings
 #libs
 from taggit.managers import TaggableManager
 
+from django.template.defaultfilters import slugify
 # model
 
 class Thread(models.Model):
@@ -25,6 +26,10 @@ class Thread(models.Model):
     #atributos de auditoria
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField('Modificado em', auto_now=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Thread, self).save(*args, **kwargs)
 
     @models.permalink
     def get_absolute_url(self): 

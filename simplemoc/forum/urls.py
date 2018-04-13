@@ -1,8 +1,9 @@
 from django.conf.urls import url, include
-from simplemoc.forum.views import (indexForum, threadForum, replayCorrect, replayIncorrect, replayUp, replayDown)
+from simplemoc.forum.views import (indexForum, threadForum, replayCorrect, replayIncorrect, replayUp, replayDown, addtopico)
 
 urlpatterns = [
     url(r'^$', indexForum, name="forum"),
+    url(r'^addtopico/new$', addtopico, name="addtopico"),
     url(r'^tag/(?P<tag>[\w_-]+)$', indexForum, name="forum_tagged"),
     url(r'^topico/(?P<slug>[\w_-]+)$', threadForum, name="forum_thread"),
     url(r'^respostas/(?P<pk>\d+)/correct/$', replayCorrect , name="forum_replay_correct"),

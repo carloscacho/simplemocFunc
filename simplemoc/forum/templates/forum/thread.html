@@ -6,7 +6,10 @@
         <ol class="breadcrumb">
             {% block breadcrumb %}
             <li class="breadcrumb-item active" aria-current="page">
-                <a href="{{ object.get_absolute_url }}"> {{ object }}</a>
+                <a href="{% url 'forum' %}">Forum</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                <a href="{{ object.get_absolute_url }}">{{ object }}</a>
             </li>
             {% endblock breadcrumb %}
         </ol>
@@ -158,7 +161,8 @@
                     {%endfor%}
                     {%if object.replies.all.count > 5 %}
                     <div class="showbtn">
-                        <button class="showmore btn btn-outline-warning">Mostrar todos as respostas</button>
+                        <button class="showmore btn btn-outline-warning">Mostrar mais as respostas</button>
+                        <button class="showall float-right btn btn-outline-info">Mostrar todas as respostas</button>
                     </div>
                     {%endif %}
                     <!-- formulario de respostas -->
@@ -232,7 +236,7 @@
 
     //Ocultar Comentarios 
     $('.replycard').each((index, element) => {
-        if (index >= 5) {
+        if (index >= 3) {
             $(element).addClass("hidden");
         }
     })
@@ -240,11 +244,11 @@
     //Mostrar mais respostas
     $('.showmore').on('click', (e) => {
         e.preventDefault();
-        const $this = $(e.target)
+        const $this = $(e.target).parent("div")
         const allCards = $('.replycard.hidden')
         console.log(allCards.length)
         allCards.each((index, element) => {
-            if(index < 5){
+            if(index < 3){
                 $(element).removeClass('hidden')
             }
     
@@ -255,5 +259,20 @@
         }
         
     })
+
+        //Mostrar todas as respostas respostas
+        $('.showall').on('click', (e) => {
+            e.preventDefault();
+            const $this = $(e.target).parent("div")
+            const allCards = $('.replycard.hidden')
+            console.log(allCards.length)
+            allCards.each((index, element) => {
+                $(element).removeClass('hidden')
+                    
+            })
+
+            $this.addClass('hidden')
+            
+        })
 </script>
 {% endblock%}
